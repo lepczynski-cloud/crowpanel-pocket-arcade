@@ -11,6 +11,12 @@ It does not require Wi-Fi, Bluetooth, an SD card or external game assets.
 
 ## Games
 
+<p align="center">
+  <a href="game V1[51].gif">
+    <img src="game V1[51].gif" alt="ESP32 games demonstration" width="600">
+  </a>
+</p>
+
 ### Reflex Beacon
 
 A reaction-speed challenge built for short sessions.
