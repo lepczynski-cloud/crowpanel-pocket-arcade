@@ -12,8 +12,8 @@ It does not require Wi-Fi, Bluetooth, an SD card or external game assets.
 ## Games
 
 <p align="center">
-  <a href="game V1[51].gif">
-    <img src="game V1[51].gif" alt="ESP32 games demonstration" width="600">
+  <a href="game_v1.gif">
+    <img src="game_v1.gif" alt="ESP32 games demonstration" width="600">
   </a>
 </p>
 
