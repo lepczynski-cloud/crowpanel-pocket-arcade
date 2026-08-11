@@ -1,0 +1,15 @@
+Project notice
+
+CrowPanel Pocket Arcade is an independent open-source project by Wojciech Lepczynski.
+
+The source code, interface layout, game names, procedural graphics, object designs and generated puzzle layouts in this repository are original to this project. The repository does not include copied source code, artwork, animation, audio, branding or level data from commercial games.
+
+Star Pod Sprint uses an original pod character, geometric spike and barrier designs, original coin graphics and independent source code. It does not include browser-dinosaur assets, branding, animation, audio, level data or source code.
+
+Shift Vault generates its own reachable puzzle states at runtime and does not include copied commercial level packs. Burst Hunt uses original procedural target and hazard designs.
+
+"Elecrow" and "CrowPanel" are used only to identify compatible hardware. They may be trademarks of their respective owners. This project is not affiliated with, endorsed by or sponsored by Elecrow, browser vendors or publishers of other games.
+
+Project links:
+- https://github.com/lepczynski-cloud/crowpanel-pocket-arcade
+- https://lepczynski.it/

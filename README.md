@@ -2,72 +2,75 @@
 
 [![PlatformIO build](https://github.com/lepczynski-cloud/crowpanel-pocket-arcade/actions/workflows/platformio-build.yml/badge.svg)](https://github.com/lepczynski-cloud/crowpanel-pocket-arcade/actions/workflows/platformio-build.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/version-1.2.0-37dfff.svg)](CHANGELOG.md)
 
-Three original offline touchscreen games for the Elecrow CrowPanel 2.8-inch ESP32 display.
+CrowPanel Pocket Arcade is an original offline mini-arcade for the Elecrow CrowPanel 2.8-inch ESP32 display. It provides three touch-first games, a compact launcher and procedural graphics without Wi-Fi, Bluetooth, PSRAM, an SD card or external game assets.
 
-The project is designed for the same 320 x 240 CrowPanel hardware configuration used by
-CrowPanel Admin Pocket Toolkit, but it is a separate firmware focused entirely on games.
-It does not require Wi-Fi, Bluetooth, an SD card or external game assets.
+## Gameplay comparison
+
+| Version 1 | Version 2 |
+| --- | --- |
+| <img src="docs/game_v1.gif" alt="CrowPanel Pocket Arcade version 1 gameplay" width="390"> | <img src="docs/game_v2.gif" alt="CrowPanel Pocket Arcade version 2 gameplay" width="390"> |
+
+## Video
+
+[Watch the full gameplay video on YouTube](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
 
 ## Games
 
-<p align="center">
-  <a href="game_v1.gif">
-    <img src="game_v1.gif" alt="ESP32 games demonstration" width="600">
-  </a>
-</p>
+### Burst Hunt
 
-### Reflex Beacon
+A clear, fast target game built around short sessions and accurate taps.
 
-A reaction-speed challenge built for short sessions.
-
-- 10 randomized rounds;
-- target timing changes every round;
-- smaller targets and shorter time windows as the run progresses;
-- combo scoring for fast reactions;
-- penalties for early taps and missed targets;
-- average reaction time, fastest reaction and session high score.
+- tap colorful objects surrounded by a bright green ring;
+- avoid black mines marked with a large red-and-white `X`;
+- use the permanent on-screen legend to identify safe targets and hazards;
+- build combos for higher scores;
+- lose points for empty taps and lose lives for hitting hazards;
+- play Easy, Normal or Hard sessions with different pacing and target sizes;
+- enjoy local hit bursts without full-screen flashes or continuous screen clearing.
 
 ### Shift Vault
 
-A touch-friendly sliding-block logic puzzle.
+A generated 6 x 6 spatial puzzle with free four-direction movement.
 
-- 5 x 5 board;
-- select a block, then move it with large direction buttons;
-- the cyan target block must reach the exit on the right;
-- every puzzle is created from a solved configuration using legal reversible moves;
-- no third-party level packs or copied puzzle layouts are included;
-- restart and new-puzzle controls are available directly on the game screen.
+- move the gold `KEY` piece to the bright green exit on the right;
+- swipe any piece up, down, left or right when there is free space;
+- move dominoes, long bars, squares and several L-shaped pieces;
+- pieces never overlap and cannot leave the board;
+- choose Easy, Normal or Hard generation profiles;
+- restart the current puzzle or generate a new one from the game screen;
+- each board is created from a reachable state using legal reversible moves.
 
-### Circuit Worm
+### Star Pod Sprint
 
-A fast grid arcade game controlled with swipe gestures.
+A minimal one-touch endless runner with an original pod character.
 
-- swipe up, down, left or right to steer;
-- collect energy nodes to grow and score;
-- movement speed increases during the run;
-- new obstacles appear as the score rises;
-- temporary bonus nodes add extra points;
-- pause, restart and session high score support.
+- tap once to jump;
+- clear single, double and triple spike groups;
+- avoid geometric barriers;
+- collect gold coins for bonus points;
+- increase the score by running farther and passing obstacles;
+- choose Chill, Arcade or Turbo speed profiles;
+- play on a stable, minimal background rendered with small dirty rectangles instead of full-screen redraws.
 
-## User interface
+## Controls
 
-The start screen contains three large game cards designed for the 320 x 240 resistive
-touchscreen. All graphics are drawn at runtime with TFT primitives, so the firmware does
-not need a filesystem full of PNG or JPEG assets.
+- Select a game from the three cards on the launcher.
+- Use `HOME` in the upper-left corner to return to the launcher.
+- Burst Hunt uses single taps.
+- Shift Vault uses swipe gestures in all four directions.
+- Star Pod Sprint uses a single tap to jump and includes a pause button.
 
-The visual style uses a dark arcade background, cyan highlights, bright status colors and
-large touch targets. Each game has a HOME button in the upper-left corner.
+## Hardware target
 
-## Target hardware
+The supplied PlatformIO environment targets:
 
-Test target:
-
-- Elecrow CrowPanel 2.8-inch ESP32 Miner/HMI display;
+- Elecrow CrowPanel 2.8-inch ESP32 display;
 - ESP32-WROOM-32-N4;
 - 320 x 240 ILI9341-compatible TFT in landscape orientation;
 - XPT2046-compatible resistive touch controller;
-- TFT_eSPI display and touch support;
+- TFT_eSPI 2.5.31;
 - no PSRAM requirement;
 - no SD card requirement.
 
@@ -83,149 +86,111 @@ Configured pins:
 | Backlight | 27 |
 | Touch CS | 33 |
 
-## Project structure
+## Build and upload
 
-```text
-.
-├── .github/workflows/platformio-build.yml
-├── include/
-│   ├── App.h
-│   ├── AppConfig.h
-│   ├── Theme.h
-│   ├── TouchInput.h
-│   ├── Types.h
-│   ├── Ui.h
-│   └── games/
-│       ├── ReactionGame.h
-│       ├── SlidingGame.h
-│       └── WormGame.h
-├── src/
-│   ├── games/
-│   │   ├── ReactionGame.cpp
-│   │   ├── SlidingGame.cpp
-│   │   └── WormGame.cpp
-│   ├── App.cpp
-│   ├── AppConfig.cpp
-│   ├── TouchInput.cpp
-│   ├── Ui.cpp
-│   └── main.cpp
-└── platformio.ini
-```
-
-## Build with CLion and PlatformIO
-
-### 1. Install PlatformIO Core
-
-macOS/Linux:
+Install PlatformIO Core:
 
 ```bash
 python3 -m pip install --user --upgrade platformio
 ```
 
-Windows PowerShell:
-
-```powershell
-py -m pip install --user --upgrade platformio
-```
-
-If you already use PlatformIO with CLion, keep your existing installation.
-
-### 2. Open the project
-
-1. Clone or download this repository.
-2. Open the repository directory in CLion.
-3. Make sure PlatformIO support is enabled in your CLion setup.
-4. Let PlatformIO resolve the ESP32 platform and TFT_eSPI dependency from `platformio.ini`.
-
-### 3. Build
-
-From the CLion terminal:
+Clone the repository:
 
 ```bash
-pio run
+git clone https://github.com/lepczynski-cloud/crowpanel-pocket-arcade.git
+cd crowpanel-pocket-arcade
 ```
 
-### 4. Upload
-
-Connect the CrowPanel with a data-capable USB-C cable and run:
+Build the firmware:
 
 ```bash
-pio run --target upload
+pio run -e crowpanel_28
 ```
 
-If automatic upload mode does not start, hold BOOT while upload begins and release it
-when the terminal shows `Connecting...`.
-
-### 5. Serial monitor
+Upload it to the connected CrowPanel:
 
 ```bash
-pio device monitor
+pio run -e crowpanel_28 --target upload
 ```
 
-The monitor speed is 115200 baud.
+Open the serial monitor:
+
+```bash
+pio device monitor --baud 115200
+```
+
+The project can be opened directly in CLion with PlatformIO support enabled.
 
 ## Touch calibration
 
-The calibration switch is in `include/AppConfig.h`. The default calibration values are
-defined in `src/AppConfig.cpp` and are based on the working CrowPanel Admin Pocket Toolkit
-configuration:
+The default calibration values are stored in `src/AppConfig.cpp`:
 
 ```cpp
 uint16_t touchCalibration[5] = {189, 3416, 359, 3439, 1};
 ```
 
-If touch input is offset on your unit:
+Calibration mode is controlled by `RUN_TOUCH_CALIBRATION` in `include/AppConfig.h`. When enabled, the firmware displays calibration points and prints the resulting five values to the serial monitor.
 
-1. Open `include/AppConfig.h`.
-2. Set `RUN_TOUCH_CALIBRATION` to `true`.
-3. Build and upload the firmware.
-4. Follow the calibration points on the display.
-5. Copy the five values printed to Serial Monitor into `src/AppConfig.cpp`.
-6. Set `RUN_TOUCH_CALIBRATION` back to `false`.
-7. Build and upload again.
+## Rendering and memory strategy
 
-## Memory and asset strategy
+The firmware draws its interface with TFT primitives and fixed-size game-state arrays. It does not load bitmap packs or create a full-screen framebuffer.
 
-This firmware intentionally avoids large bitmap assets and full-screen frame buffers.
-The interface is rendered from rectangles, circles, lines, text and small procedural
-icons. Game state uses compact fixed-size arrays.
+Burst Hunt keeps the playfield static and updates only target-sized regions, HUD values and the timer bar. Star Pod Sprint keeps the sky and ground static and erases only the previous bounds of the player, obstacles and coins before drawing their new positions. This reduces visible flashing and keeps memory use suitable for the ESP32-WROOM-32-N4.
 
-That approach keeps the project suitable for an ESP32-WROOM-32-N4 without requiring a
-memory card or PSRAM.
+## Original implementation and third-party rights
 
-## Original implementation and IP approach
+The source code, launcher, game names, procedural graphics, object designs and generated puzzle layouts in this repository were created for this project.
 
-The project uses familiar game genres, but the implementation is independent:
+Star Pod Sprint uses the general idea of a one-button side-scrolling runner, but it has an original pod character, geometric hazards, coin graphics, scoring rules and independent source code. It does not include browser-dinosaur artwork, animation, audio, level data, branding or source code.
 
-- all source code in this repository is written for this project;
-- the UI and visual assets are generated specifically for this firmware;
-- Shift Vault generates its own puzzle positions instead of shipping copied level data;
-- no audio, sprites, logos or text from existing commercial games are included;
-- the game names used in the firmware are project-specific labels rather than names of
-  the commercial titles that inspired the general genres.
+Shift Vault does not ship copied commercial level packs. Its boards are generated at runtime from legal reversible moves. Burst Hunt uses original procedural targets and hazard graphics.
 
-Generic descriptions such as reaction game, sliding-block puzzle and worm/snake-style
-arcade game are used only to explain the gameplay category.
+`Elecrow` and `CrowPanel` are used only to identify compatible hardware. See [NOTICE](NOTICE) for the affiliation and trademark disclaimer.
 
-See [NOTICE](NOTICE) for the hardware-name and affiliation disclaimer.
+## Project structure
 
-## Development notes
+```text
+.
+├── .github/workflows/platformio-build.yml
+├── docs/
+│   ├── game_v1.gif
+│   └── game_v2.gif
+├── include/
+│   ├── games/
+│   │   ├── ReactionGame.h
+│   │   ├── RunnerGame.h
+│   │   └── SlidingGame.h
+│   ├── App.h
+│   ├── AppConfig.h
+│   ├── Theme.h
+│   ├── TouchInput.h
+│   ├── Types.h
+│   └── Ui.h
+├── src/
+│   ├── games/
+│   │   ├── ReactionGame.cpp
+│   │   ├── RunnerGame.cpp
+│   │   └── SlidingGame.cpp
+│   ├── App.cpp
+│   ├── AppConfig.cpp
+│   ├── TouchInput.cpp
+│   ├── Ui.cpp
+│   └── main.cpp
+├── CHANGELOG.md
+├── LICENSE
+├── NOTICE
+├── README.md
+└── platformio.ini
+```
 
-- Framework: Arduino for ESP32.
-- Build system: PlatformIO.
-- Display library: TFT_eSPI 2.5.31.
-- ESP32 PlatformIO platform: espressif32 6.6.0.
-- Display SPI speed is intentionally kept at 16 MHz to match the known working hardware
-  configuration from the Admin Pocket Toolkit project.
-- Wi-Fi and Bluetooth are not initialized by this firmware.
+The two GIF files are optional repository media and are not required by the firmware.
 
-## Related projects
+## Related project
 
-- [Admin Toolkit](https://github.com/lepczynski-cloud/admin-toolkit) - browser-based admin utilities.
-- [CrowPanel Admin Pocket Toolkit](https://github.com/lepczynski-cloud/crowpanel-Admin-Pocket-Toolkit) - offline ESP32 admin utilities for the same display family.
+- [Admin Toolkit](https://github.com/lepczynski-cloud/admin-toolkit)
 
 ## License
 
-MIT License. See [LICENSE](LICENSE).
+Released under the [MIT License](LICENSE).
 
 Created by Wojciech Lepczynski.
