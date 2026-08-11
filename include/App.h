@@ -3,8 +3,8 @@
 #include <TFT_eSPI.h>
 
 #include "Types.h"
-#include "games/WormGame.h"
 #include "games/ReactionGame.h"
+#include "games/RunnerGame.h"
 #include "games/SlidingGame.h"
 
 class App {
@@ -19,19 +19,19 @@ class App {
     Home,
     Reaction,
     Sliding,
-    Worm,
+    Runner,
   };
 
   TFT_eSPI& tft_;
   Screen screen_ = Screen::Home;
   ReactionGame reaction_;
   SlidingGame sliding_;
-  WormGame worm_;
+  RunnerGame runner_;
 
   static constexpr Rect HOME_BUTTON{6, 6, 52, 28};
   static constexpr Rect REACTION_CARD{6, 53, 98, 160};
   static constexpr Rect SLIDING_CARD{111, 53, 98, 160};
-  static constexpr Rect WORM_CARD{216, 53, 98, 160};
+  static constexpr Rect RUNNER_CARD{216, 53, 98, 160};
 
   void showSplash();
   void drawHome();

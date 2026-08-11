@@ -21,27 +21,26 @@ InputFrame TouchInput::update() {
     startY_ = y;
     lastX_ = x;
     lastY_ = y;
-    swipeIssued_ = false;
     frame.pressed = true;
     frame.startX = startX_;
     frame.startY = startY_;
   } else if (down && wasDown_) {
     lastX_ = x;
     lastY_ = y;
-    const int16_t dx = static_cast<int16_t>(x) - static_cast<int16_t>(startX_);
-    const int16_t dy = static_cast<int16_t>(y) - static_cast<int16_t>(startY_);
-    if (!swipeIssued_ && (std::abs(dx) >= 20 || std::abs(dy) >= 20)) {
-      swipeIssued_ = true;
-      frame.swipe = true;
-      frame.swipeDx = dx;
-      frame.swipeDy = dy;
-    }
   } else if (!down && wasDown_) {
     frame.released = true;
     frame.x = lastX_;
     frame.y = lastY_;
     frame.startX = startX_;
     frame.startY = startY_;
+
+    const int16_t dx = static_cast<int16_t>(lastX_) - static_cast<int16_t>(startX_);
+    const int16_t dy = static_cast<int16_t>(lastY_) - static_cast<int16_t>(startY_);
+    if (std::abs(dx) >= 18 || std::abs(dy) >= 18) {
+      frame.swipe = true;
+      frame.swipeDx = dx;
+      frame.swipeDy = dy;
+    }
   }
 
   wasDown_ = down;

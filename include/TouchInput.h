@@ -12,7 +12,6 @@ class TouchInput {
  private:
   TFT_eSPI& tft_;
   bool wasDown_ = false;
-  bool swipeIssued_ = false;
   uint16_t startX_ = 0;
   uint16_t startY_ = 0;
   uint16_t lastX_ = 0;

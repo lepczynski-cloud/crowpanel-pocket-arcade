@@ -57,23 +57,29 @@ void drawTargetIcon(TFT_eSPI& tft, int16_t cx, int16_t cy, uint16_t color) {
   tft.drawFastHLine(cx + 20, cy, 14, Theme::MUTED);
   tft.drawFastVLine(cx, cy - 33, 14, Theme::MUTED);
   tft.drawFastVLine(cx, cy + 20, 14, Theme::MUTED);
+  tft.fillCircle(cx - 17, cy - 17, 5, Theme::PINK);
+  tft.fillCircle(cx + 19, cy + 13, 4, Theme::YELLOW);
 }
 
 void drawBlocksIcon(TFT_eSPI& tft, int16_t cx, int16_t cy, uint16_t color) {
-  tft.fillRoundRect(cx - 30, cy - 25, 24, 50, 5, Theme::PURPLE);
+  tft.fillRoundRect(cx - 31, cy - 25, 24, 50, 5, Theme::PURPLE);
   tft.fillRoundRect(cx - 1, cy - 25, 52, 24, 5, color);
   tft.fillRoundRect(cx - 1, cy + 5, 35, 20, 5, Theme::PINK);
-  tft.drawFastHLine(cx + 38, cy + 15, 18, Theme::MUTED);
-  tft.fillTriangle(cx + 57, cy + 15, cx + 49, cy + 10, cx + 49, cy + 20, Theme::MUTED);
+  tft.drawRoundRect(cx - 1, cy - 25, 52, 24, 5, Theme::WHITE);
+  tft.drawFastHLine(cx + 38, cy + 15, 18, Theme::LIME);
+  tft.fillTriangle(cx + 57, cy + 15, cx + 49, cy + 10, cx + 49, cy + 20, Theme::LIME);
 }
 
-void drawWormIcon(TFT_eSPI& tft, int16_t cx, int16_t cy, uint16_t color) {
-  const int16_t points[6][2] = {{-28, 12}, {-14, 12}, {-2, 2}, {10, -8}, {24, -8}, {32, 2}};
-  for (uint8_t i = 0; i < 6; ++i) {
-    const uint16_t partColor = i == 5 ? Theme::LIME : color;
-    tft.fillCircle(cx + points[i][0], cy + points[i][1], i == 5 ? 9 : 7, partColor);
-  }
-  tft.fillCircle(cx + 35, cy, 2, Theme::BG);
+void drawRunnerIcon(TFT_eSPI& tft, int16_t cx, int16_t cy, uint16_t color) {
+  tft.drawFastHLine(cx - 42, cy + 25, 84, Theme::MUTED);
+  tft.fillTriangle(cx + 20, cy + 24, cx + 30, cy + 4, cx + 40, cy + 24, Theme::PINK);
+  tft.fillCircle(cx - 14, cy - 1, 14, color);
+  tft.fillRoundRect(cx - 28, cy - 3, 28, 23, 10, color);
+  tft.fillRoundRect(cx - 21, cy + 1, 18, 10, 4, Theme::BG_2);
+  tft.fillCircle(cx - 7, cy - 13, 3, Theme::YELLOW);
+  tft.drawLine(cx - 7, cy - 16, cx - 3, cy - 22, Theme::YELLOW);
+  tft.drawFastHLine(cx - 42, cy + 16, 10, Theme::CYAN_DARK);
+  tft.drawFastHLine(cx - 46, cy + 9, 14, Theme::GRID);
 }
 
 void drawSparkles(TFT_eSPI& tft, uint8_t count, int16_t yMin, int16_t yMax) {

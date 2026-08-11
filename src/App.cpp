@@ -1,6 +1,7 @@
 #include "App.h"
 
 #include <Arduino.h>
+#include <cstdio>
 
 #include "AppConfig.h"
 #include "Theme.h"
@@ -9,10 +10,10 @@
 constexpr Rect App::HOME_BUTTON;
 constexpr Rect App::REACTION_CARD;
 constexpr Rect App::SLIDING_CARD;
-constexpr Rect App::WORM_CARD;
+constexpr Rect App::RUNNER_CARD;
 
 App::App(TFT_eSPI& display)
-    : tft_(display), reaction_(display), sliding_(display), worm_(display) {}
+    : tft_(display), reaction_(display), sliding_(display), runner_(display) {}
 
 void App::begin() {
   showSplash();
@@ -24,13 +25,14 @@ void App::showSplash() {
   Ui::drawSparkles(tft_, 38, 8, 232);
 
   const int16_t cx = 160;
-  const int16_t cy = 84;
+  const int16_t cy = 83;
   for (int16_t radius = 10; radius <= 42; radius += 8) {
     tft_.drawCircle(cx, cy, radius, radius % 16 == 10 ? Theme::CYAN : Theme::PURPLE);
-    delay(45);
+    delay(38);
   }
   tft_.fillCircle(cx, cy, 13, Theme::CYAN);
   tft_.fillCircle(cx, cy, 6, Theme::WHITE);
+  tft_.fillTriangle(cx + 42, cy + 11, cx + 55, cy - 7, cx + 61, cy + 15, Theme::PINK);
 
   tft_.setTextDatum(MC_DATUM);
   tft_.setTextFont(4);
@@ -38,14 +40,14 @@ void App::showSplash() {
   tft_.drawString("POCKET ARCADE", 160, 145);
   tft_.setTextFont(1);
   tft_.setTextColor(Theme::MUTED, Theme::BG);
-  tft_.drawString("ESP32  |  TOUCH  |  OFFLINE", 160, 172);
+  tft_.drawString("ORIGINAL  |  TOUCH  |  OFFLINE", 160, 172);
 
   tft_.fillRoundRect(58, 198, 204, 7, 4, Theme::PANEL);
   for (int16_t width = 4; width <= 200; width += 14) {
     tft_.fillRoundRect(60, 200, width, 3, 2, Theme::CYAN);
-    delay(25);
+    delay(20);
   }
-  delay(220);
+  delay(180);
 }
 
 void App::drawGameCard(const Rect& rect, const char* title, const char* subtitle, uint8_t icon) {
@@ -60,7 +62,7 @@ void App::drawGameCard(const Rect& rect, const char* title, const char* subtitle
   } else if (icon == 1) {
     Ui::drawBlocksIcon(tft_, cx - 4, cy, Theme::CYAN);
   } else {
-    Ui::drawWormIcon(tft_, cx - 2, cy, Theme::CYAN);
+    Ui::drawRunnerIcon(tft_, cx, cy, Theme::CYAN);
   }
 
   tft_.setTextDatum(MC_DATUM);
@@ -89,12 +91,14 @@ void App::drawHome() {
   tft_.setTextDatum(MR_DATUM);
   tft_.setTextFont(1);
   tft_.setTextColor(Theme::CYAN, Theme::BG_2);
-  tft_.drawString("3 ORIGINAL GAMES", 309, 20);
+  char version[20];
+  std::snprintf(version, sizeof(version), "v%s", Config::APP_VERSION);
+  tft_.drawString(version, 309, 20);
   tft_.fillRect(0, 41, Config::SCREEN_WIDTH, 2, Theme::CYAN_DARK);
 
-  drawGameCard(REACTION_CARD, "REFLEX", "Beacon", 0);
-  drawGameCard(SLIDING_CARD, "SLIDE", "logic", 1);
-  drawGameCard(WORM_CARD, "CIRCUIT", "Worm", 2);
+  drawGameCard(REACTION_CARD, "BURST", "Hunt", 0);
+  drawGameCard(SLIDING_CARD, "SHIFT", "Vault", 1);
+  drawGameCard(RUNNER_CARD, "STAR POD", "Sprint", 2);
 
   tft_.setTextDatum(MC_DATUM);
   tft_.setTextFont(1);
@@ -111,8 +115,8 @@ void App::open(Screen screen) {
     case Screen::Sliding:
       sliding_.enter();
       break;
-    case Screen::Worm:
-      worm_.enter();
+    case Screen::Runner:
+      runner_.enter();
       break;
     case Screen::Home:
       drawHome();
@@ -134,8 +138,8 @@ void App::update(const InputFrame& input, uint32_t now) {
       open(Screen::Reaction);
     } else if (contains(SLIDING_CARD, input.x, input.y)) {
       open(Screen::Sliding);
-    } else if (contains(WORM_CARD, input.x, input.y)) {
-      open(Screen::Worm);
+    } else if (contains(RUNNER_CARD, input.x, input.y)) {
+      open(Screen::Runner);
     }
     return;
   }
@@ -147,8 +151,8 @@ void App::update(const InputFrame& input, uint32_t now) {
     case Screen::Sliding:
       sliding_.update(input, now);
       break;
-    case Screen::Worm:
-      worm_.update(input, now);
+    case Screen::Runner:
+      runner_.update(input, now);
       break;
     case Screen::Home:
       break;

@@ -20,6 +20,9 @@ constexpr uint16_t LIME = 0xB7E0;
 constexpr uint16_t YELLOW = 0xFFE0;
 constexpr uint16_t ORANGE = 0xFD20;
 constexpr uint16_t RED = 0xF2AA;
+constexpr uint16_t SKY = 0x10A5;
+constexpr uint16_t SKY_DARK = 0x0843;
+constexpr uint16_t GOLD = 0xFEA0;
 constexpr uint16_t WHITE = 0xFFFF;
 constexpr uint16_t BLACK = 0x0000;
 
