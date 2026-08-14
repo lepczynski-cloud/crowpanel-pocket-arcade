@@ -14,7 +14,7 @@ CrowPanel Pocket Arcade is an original offline mini-arcade for the Elecrow CrowP
 
 ## Video
 
-[Watch the full gameplay video on YouTube](https://www.youtube.com/watch?v=AoI0MDt_HHQ)
+[Watch the full gameplay video on YouTube](https://www.youtube.com/watch?v=BkuglAy6qOQ)
 
 ## Games
 
