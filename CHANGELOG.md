@@ -2,6 +2,15 @@
 
 All notable changes to this project are documented in this file.
 
+## [Unreleased] - website and installer
+
+- Added a lightweight animated static website with actual-device gameplay, three still photos extracted from the newest footage and an embedded YouTube video.
+- Added two ESP Web Tools installation options: verified factory firmware and application-only update.
+- Added automatic Cloudflare Pages firmware compilation, merged ESP32 flash image, SHA-256-named binary assets and manifests.
+- Compressed the two gameplay GIFs and removed the redundant GitHub Actions workflow.
+- Clarified supported hardware, installer limitations and Cloudflare Pages settings in README.
+- Firmware gameplay and version remain unchanged at v1.2.0.
+
 ## [1.2.0] - 2026-08-11
 
 ### Added

@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080c18">
+  <meta name="description" content="CrowPanel Pocket Arcade: three original offline touchscreen games on a tiny ESP32 device. Explore real gameplay, watch the video and flash firmware from your browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CrowPanel Pocket Arcade | Three games. One tiny screen.">
+  <meta property="og:description" content="A tiny DIY arcade with three original games. Built for the Elecrow CrowPanel 2.8-inch ESP32 display. Install directly from your browser.">
+  <meta property="og:image" content="https://pocket-arcade.lepczynski.it/assets/shift.webp">
+  <meta property="og:url" content="https://pocket-arcade.lepczynski.it/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://pocket-arcade.lepczynski.it/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230c1124'/%3E%3Crect x='10' y='18' width='44' height='28' rx='8' fill='%2329dfca'/%3E%3Cpath d='M21 32h14m-7-7v14' stroke='%230a1223' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='43' cy='28' r='3' fill='%230a1223'/%3E%3Ccircle cx='48' cy='35' r='3' fill='%230a1223'/%3E%3C/svg%3E">
+  <title>CrowPanel Pocket Arcade | Browser firmware installer</title>
+  <style>
+    :root { color-scheme: dark; --bg:#080c18; --bg2:#10172b; --panel:#10192c; --line:rgba(186,211,246,.14); --text:#edf6ff; --muted:#a4b2c9; --mint:#48e7ca; --violet:#a48cff; --bright:#c9fdf4; --radius:22px; }
+    *,*::before,*::after { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:88px; overflow-x:clip; }
+    body { margin:0; background:var(--bg); color:var(--text); font:16px/1.65 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; overflow-x:hidden; }
+    body::before { content:""; position:absolute; z-index:-1; top:0; left:0; right:0; height:900px; pointer-events:none; background:radial-gradient(ellipse 45% 35% at 83% 18%,rgba(74,59,158,.24),transparent 75%),radial-gradient(ellipse 50% 40% at 13% 32%,rgba(15,107,114,.16),transparent 73%); }
+    ::selection { background:rgba(72,231,202,.26); color:white; }
+    a { color:inherit; } a:focus-visible,button:focus-visible { outline:3px solid var(--mint); outline-offset:4px; }
+    img { max-width:100%; display:block; }
+    .shell { width:min(1120px,calc(100% - 48px)); margin-inline:auto; }
+    .topbar { position:relative; z-index:10; border-bottom:1px solid rgba(210,228,255,.07); background:rgba(8,12,24,.84); }
+    .nav { min-height:78px; display:flex; gap:20px; align-items:center; justify-content:space-between; }
+    .brand { display:inline-flex; gap:11px; align-items:center; text-decoration:none; font-weight:850; font-size:14px; letter-spacing:.045em; line-height:1.2; }
+    .brand-icon { display:grid; place-items:center; width:38px; height:38px; color:#06101c; background:var(--mint); border-radius:11px; box-shadow:0 0 24px rgba(72,231,202,.14); }
+    .brand-icon svg { width:22px; height:22px; }
+    .navlinks { display:flex; align-items:center; gap:28px; }
+    .navlinks a { color:#c4d0e3; font-size:13px; font-weight:680; text-decoration:none; transition:color .2s; }
+    .navlinks a:hover { color:var(--mint); }
+    .navlinks .source-link { padding:10px 16px; border:1px solid var(--line); border-radius:999px; color:white; }
+    .eyebrow { display:flex; align-items:center; gap:10px; margin:0 0 20px; font:750 11px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--mint); letter-spacing:.15em; text-transform:uppercase; }
+    .dot { display:inline-block; flex:none; width:8px; height:8px; border-radius:100%; background:var(--mint); box-shadow:0 0 0 4px rgba(72,231,202,.1); animation:heartbeat 3s ease-in-out infinite; }
+    .hero { min-height:655px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.9fr); gap:66px; align-items:center; padding:74px 0 84px; }
+    h1,h2,h3,p { margin-top:0; }
+    h1 { max-width:670px; font-weight:850; font-size:clamp(48px,5.6vw,76px); line-height:1.06; letter-spacing:-.065em; margin:0 0 25px; }
+    .gradient-text { background:linear-gradient(115deg,#8cf7df 10%,#ad9aff 90%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .hero-copy { font-size:17px; max-width:515px; color:var(--muted); line-height:1.85; margin:0 0 30px; }
+    .actions { display:flex; flex-wrap:wrap; align-items:center; gap:13px; }
+    .btn { display:inline-flex; justify-content:center; align-items:center; gap:12px; padding:13px 21px; min-height:50px; border-radius:12px; border:1px solid transparent; font-family:inherit; font-size:14px; font-weight:750; line-height:1.2; text-decoration:none; cursor:pointer; transition:transform .2s,background .2s,border-color .2s,box-shadow .2s; }
+    .btn:hover:not(:disabled) { transform:translateY(-2px); }
+    .btn-primary { background:var(--mint); color:#071926; box-shadow:0 9px 32px rgba(43,210,186,.17); }
+    .btn-primary:hover:not(:disabled) { background:#8afbe3; box-shadow:0 9px 35px rgba(43,210,186,.24); }
+    .btn-outline { background:rgba(255,255,255,.035); color:#f4f9ff; border-color:var(--line); }
+    .btn-outline:hover:not(:disabled) { background:rgba(255,255,255,.08); border-color:rgba(186,211,246,.35); }
+    .btn:disabled { cursor:not-allowed; opacity:.45; box-shadow:none; }
+    .btn svg { width:17px; height:17px; flex:none; }
+    .specs { margin-top:38px; display:flex; flex-wrap:wrap; gap:11px; }
+    .spec { display:inline-flex; align-items:center; gap:8px; color:#c5d3e4; padding:6px 10px; background:rgba(255,255,255,.025); border:1px solid rgba(255,255,255,.075); border-radius:7px; font:650 12px/1.5 ui-monospace,monospace; }
+    .spec b { color:var(--mint); font-size:14px; }
+    .hero-visual { position:relative; justify-self:center; width:min(100%,365px); }
+    .hero-visual::before { content:""; position:absolute; inset:-9% -18%; z-index:-1; border-radius:50%; background:radial-gradient(ellipse,rgba(73,231,202,.13),rgba(139,92,246,.08) 40%,transparent 72%); filter:blur(15px); animation:ambient 8s ease-in-out infinite alternate; }
+    .media-frame { position:relative; border:1px solid rgba(221,245,255,.21); overflow:hidden; padding:9px; border-radius:28px; background:linear-gradient(130deg,rgba(68,238,207,.11),rgba(108,87,210,.09) 66%,rgba(255,255,255,.03)); box-shadow:0 40px 85px rgba(0,0,0,.38),0 0 0 1px rgba(255,255,255,.03) inset; transform:rotate(1.5deg); transition:transform .4s ease; }
+    .media-frame:hover { transform:rotate(0deg) translateY(-4px); }
+    .media-frame picture, .media-frame picture img { width:100%; display:block; }
+    .media-frame img { aspect-ratio:9/16; object-fit:cover; border-radius:20px; background:#0b1020; }
+    .live-tag { position:absolute; top:25px; left:26px; z-index:2; display:inline-flex; gap:9px; align-items:center; border:1px solid rgba(223,244,255,.19); border-radius:100px; padding:7px 11px; background:rgba(7,13,28,.81); backdrop-filter:blur(10px); font:750 11px/1.4 ui-monospace,monospace; letter-spacing:.04em; }
+    .live-tag .dot { width:6px; height:6px; }
+    .real-caption { margin:16px 0 0; text-align:center; color:#8093b0; font-size:12px; }
+    .section { padding:76px 0; }
+    .section-head { max-width:690px; margin-bottom:32px; }
+    .section-head h2 { margin:0 0 14px; font-size:clamp(32px,3.5vw,47px); font-weight:830; line-height:1.13; letter-spacing:-.047em; }
+    .section-head p { margin:0; color:var(--muted); }
+    .games { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+    .game-card { overflow:hidden; min-width:0; background:linear-gradient(160deg,#131e34,#0d1526); border:1px solid var(--line); border-radius:20px; transition:transform .25s,border-color .25s; }
+    .game-card:hover { transform:translateY(-5px); border-color:rgba(72,231,202,.37); }
+    .game-image { height:205px; overflow:hidden; background:#131a27; position:relative; }
+    .game-image::after { content:""; position:absolute; inset:50% 0 0; pointer-events:none; background:linear-gradient(transparent,rgba(9,15,27,.27)); }
+    .game-image img { width:100%; height:100%; object-fit:cover; object-position:center 46%; transition:transform .45s; }
+    .game-card:hover img { transform:scale(1.05); }
+    .game-info { padding:20px 22px 23px; }
+    .game-number { display:block; margin-bottom:7px; color:var(--mint); font:750 11px/1.4 ui-monospace,monospace; letter-spacing:.12em; }
+    .game-info h3 { margin:0 0 7px; font-size:21px; font-weight:760; letter-spacing:-.028em; }
+    .game-info p { margin:0; font-size:13px; line-height:1.65; color:var(--muted); }
+    .watch { padding:74px 0; }
+    .watch-inner { display:grid; grid-template-columns:.78fr 1.22fr; align-items:center; gap:52px; }
+    .watch-inner .section-head { margin-bottom:20px; }
+    .video-wrap { aspect-ratio:16/9; overflow:hidden; border-radius:21px; background:#000; border:1px solid rgba(255,255,255,.15); box-shadow:0 25px 55px rgba(0,0,0,.26); }
+    iframe { width:100%; height:100%; border:0; display:block; }
+    .watch-link { font-size:13px; color:var(--mint); text-decoration:none; font-weight:710; }
+    .watch-link:hover { text-decoration:underline; }
+    .install-section { padding:80px 0 98px; }
+    .install-shell { position:relative; overflow:hidden; padding:52px; border:1px solid rgba(78,222,206,.25); border-radius:27px; background:linear-gradient(127deg,rgba(29,51,68,.77),rgba(17,22,42,.94) 58%,rgba(39,31,77,.8)); }
+    .install-shell::before { content:""; position:absolute; width:450px; height:450px; top:-300px; right:-170px; border-radius:100%; background:rgba(116,119,255,.13); filter:blur(80px); pointer-events:none; }
+    .install-shell .section-head { margin-bottom:28px; }
+    .steps { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; padding-bottom:26px; margin-bottom:29px; border-bottom:1px solid rgba(210,233,255,.13); }
+    .step { display:flex; gap:13px; align-items:flex-start; font-size:13px; line-height:1.6; color:#bdcce0; }
+    .step-number { flex:none; display:grid; place-items:center; width:29px; height:29px; border:1px solid rgba(72,231,202,.32); border-radius:9px; color:var(--mint); font:750 12px ui-monospace,monospace; }
+    .step strong { display:block; color:#f0fbff; font-size:13px; margin-bottom:3px; }
+    .step p { margin:0; }
+    .flash-grid { display:grid; grid-template-columns:1fr 1fr; gap:17px; }
+    .flash-card { padding:24px 24px 21px; background:rgba(5,11,24,.42); border-radius:17px; border:1px solid rgba(204,226,248,.14); }
+    .flash-card.primary { border-color:rgba(72,231,202,.43); }
+    .flash-label { display:block; margin-bottom:11px; font:700 10px ui-monospace,monospace; letter-spacing:.12em; color:var(--mint); }
+    .flash-card h3 { margin:0 0 7px; font-size:19px; letter-spacing:-.02em; }
+    .flash-card p { color:#afbdd0; font-size:13px; margin:0 0 18px; line-height:1.6; }
+    esp-web-install-button { display:inline-block; --esp-tools-button-color:var(--mint); --esp-tools-button-text-color:#071926; --esp-tools-button-border-radius:12px; }
+    .flash-card .btn { font:750 14px/1.2 ui-sans-serif,system-ui,sans-serif; }
+    .compat-warning { display:block; color:#f9c58e; font-size:13px; max-width:280px; line-height:1.5; }
+    .build-status { margin:18px 0 0; color:#a9bed3; font:600 12px/1.6 ui-monospace,monospace; }
+    .build-status.ok { color:#7deed6; }
+    .build-status.error { color:#f4b69f; }
+    .warning { display:flex; align-items:flex-start; gap:11px; font-size:12px; color:#9bacc5; margin-top:23px; line-height:1.65; }
+    .warning svg { width:18px; height:18px; flex:none; margin-top:1px; color:#9ad0c8; }
+    .warning p { margin:0; }
+    .bottom-links { display:flex; flex-wrap:wrap; gap:9px 25px; margin:16px 0 0; padding:0; list-style:none; }
+    .bottom-links a { color:#c6d6e8; font-size:13px; font-weight:650; text-decoration:none; }
+    .bottom-links a:hover { color:var(--mint); }
+    footer { border-top:1px solid rgba(211,234,255,.11); padding:30px 0; }
+    .footer-row { display:flex; justify-content:space-between; gap:20px; align-items:center; }
+    .footer-row p { margin:0; font-size:12px; color:#8799b4; }
+    .footer-row a { color:#c8d8e9; text-decoration:none; }
+    .footer-row a:hover { color:var(--mint); }
+    body.motion .reveal { opacity:0; transform:translateY(17px); transition:opacity .55s ease,transform .55s ease; }
+    body.motion .reveal.visible { opacity:1; transform:none; }
+    @keyframes heartbeat { 0%,100% {box-shadow:0 0 0 3px rgba(72,231,202,.09);} 50%{box-shadow:0 0 0 6px rgba(72,231,202,.045);} }
+    @keyframes ambient { from {transform:scale(.94) translate(-7px,7px);} to {transform:scale(1.06) translate(10px,-4px);} }
+    @media (max-width:950px) { .hero { gap:36px; } .hero-visual { width:min(100%,310px); } .watch-inner { gap:32px; } .game-image { height:170px; } }
+    @media (max-width:720px) { .shell { width:min(100% - 34px,520px); } .nav { min-height:69px; } .navlinks { gap:15px; } .navlinks a:not(.source-link) { display:none; } .navlinks .source-link { padding:8px 12px; font-size:12px; } .hero { padding:58px 0 60px; grid-template-columns:1fr; min-height:0; gap:39px; } .hero h1 { font-size:clamp(47px,10vw,70px); } .hero-copy { font-size:15px; } .hero-visual { width:min(82%,320px); } .section,.watch { padding:57px 0; } .games { grid-template-columns:1fr; gap:15px; } .game-card { display:flex; min-height:160px; } .game-image { width:39%; height:auto; min-height:155px; flex:none; } .game-info { padding:21px 17px; align-self:center; } .game-info h3 { font-size:19px; } .watch-inner { grid-template-columns:1fr; gap:20px; } .install-section { padding:55px 0 68px; } .install-shell { padding:26px 20px; } .steps { grid-template-columns:1fr; gap:17px; } .flash-grid { grid-template-columns:1fr; } .footer-row { align-items:flex-start; flex-direction:column; gap:10px; } }
+    @media (max-width:375px) { .brand { font-size:12px; } .brand-icon { width:32px; height:32px; } .game-image { width:34%; } .game-info { padding:13px; } .hero-visual { width:89%; } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; animation:none !important; transition:none !important; } body.motion .reveal { opacity:1 !important; transform:none !important; } }
+  </style>
+  <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav shell" aria-label="Main navigation">
+      <a class="brand" href="#top" aria-label="Pocket Arcade, back to top">
+        <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 28 28" fill="none"><path d="M4 10h20a2 2 0 0 1 2 2v7a5 5 0 0 1-8.1 3.9l-2-1.6h-3.8l-2 1.6A5 5 0 0 1 2 19v-7a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="2.1"/><path d="M7 16h8M11 12v8" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/><circle cx="20" cy="14" r="1.3" fill="currentColor"/><circle cx="23" cy="18" r="1.3" fill="currentColor"/></svg></span>
+        <span>POCKET<br>ARCADE</span>
+      </a>
+      <div class="navlinks">
+        <a href="#games">The games</a><a href="#watch">Video</a><a href="#install">Install</a>
+        <a class="source-link" href="https://github.com/lepczynski-cloud/crowpanel-pocket-arcade" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero shell" aria-labelledby="hero-title">
+      <div class="reveal">
+        <p class="eyebrow"><span class="dot"></span> OPEN SOURCE · ESP32 · 2.8" TOUCHSCREEN</p>
+        <h1 id="hero-title">Tiny screen.<br><span class="gradient-text">Big arcade energy.</span></h1>
+        <p class="hero-copy">Three original touchscreen games in the palm of your hand. No Wi-Fi, accounts, SD cards or complicated setup. Just connect, tap, swipe and play.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#install">Install firmware <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+          <a class="btn btn-outline" href="https://github.com/lepczynski-cloud/crowpanel-pocket-arcade" target="_blank" rel="noopener noreferrer">Explore the code ↗</a>
+        </div>
+        <div class="specs" aria-label="Project highlights"><span class="spec"><b>03</b> GAMES</span><span class="spec"><b>320×240</b> DISPLAY</span><span class="spec"><b>100%</b> OFFLINE</span></div>
+      </div>
+      <div class="hero-visual reveal">
+        <div class="media-frame">
+          <span class="live-tag"><span class="dot"></span> ACTUAL DEVICE · LATEST VERSION</span>
+          <picture>
+            <source media="(prefers-reduced-motion: reduce)" srcset="assets/shift.webp" type="image/webp">
+            <img src="assets/arcade-v2.gif" alt="Real Elecrow CrowPanel Pocket Arcade running the current three-game firmware, filmed in the creator's hands" width="320" height="568" fetchpriority="high">
+          </picture>
+        </div>
+        <p class="real-caption">Real hardware and gameplay, not a rendered mockup.</p>
+      </div>
+    </section>
+
+    <section class="section shell" id="games" aria-labelledby="games-title">
+      <div class="section-head reveal"><p class="eyebrow">THREE GAMES · ZERO EXTRA HARDWARE</p><h2 id="games-title">Pick your next obsession.</h2><p>Fast reflexes, a clever puzzle or just one more run. All graphics are drawn on the ESP32 itself.</p></div>
+      <div class="games">
+        <article class="game-card reveal"><div class="game-image"><img src="assets/burst.webp" width="540" height="550" loading="lazy" alt="Real CrowPanel running Burst Hunt, the touchscreen target game"></div><div class="game-info"><span class="game-number">01 / REACTION</span><h3>Burst Hunt</h3><p>Hit the targets, dodge the mines and build your combo.</p></div></article>
+        <article class="game-card reveal"><div class="game-image"><img src="assets/shift.webp" width="540" height="550" loading="lazy" alt="Real CrowPanel running Shift Vault, a sliding-block logic puzzle"></div><div class="game-info"><span class="game-number">02 / PUZZLE</span><h3>Shift Vault</h3><p>Swipe the pieces. Guide the golden key to the exit.</p></div></article>
+        <article class="game-card reveal"><div class="game-image"><img src="assets/sprint.webp" width="540" height="550" loading="lazy" alt="Real CrowPanel running Star Pod Sprint, a one-touch runner"></div><div class="game-info"><span class="game-number">03 / RUNNER</span><h3>Star Pod Sprint</h3><p>One tap to jump. Avoid obstacles and collect coins.</p></div></article>
+      </div>
+    </section>
+
+    <section class="watch shell" id="watch" aria-labelledby="watch-title">
+      <div class="watch-inner">
+        <div class="reveal"><div class="section-head"><p class="eyebrow">REAL GAMEPLAY</p><h2 id="watch-title">Small device.<br>Real fun.</h2><p>Watch the three games in action on the actual CrowPanel display. The looping demo above is footage from the newest version.</p></div><a class="watch-link" href="https://www.youtube.com/watch?v=BkuglAy6qOQ" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a></div>
+        <div class="video-wrap reveal"><iframe title="CrowPanel Pocket Arcade gameplay on YouTube" loading="lazy" src="https://www.youtube-nocookie.com/embed/BkuglAy6qOQ?rel=0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      </div>
+    </section>
+
+    <section class="install-section shell" id="install" aria-labelledby="install-title">
+      <div class="install-shell reveal">
+        <div class="section-head"><p class="eyebrow"><span class="dot"></span> BROWSER FIRMWARE INSTALLER</p><h2 id="install-title">From USB cable<br>to game time.</h2><p>Flash the latest successfully built firmware directly from Chrome or Edge on your computer. No Arduino IDE or desktop installer required.</p></div>
+        <div class="steps" aria-label="Installation steps">
+          <div class="step"><span class="step-number">01</span><div><strong>Plug in the CrowPanel</strong><p>Use a USB data cable with the Elecrow 2.8-inch ESP32 model.</p></div></div>
+          <div class="step"><span class="step-number">02</span><div><strong>Choose an installation</strong><p>Allow serial access, then choose the correct USB port in the dialog.</p></div></div>
+          <div class="step"><span class="step-number">03</span><div><strong>Play</strong><p>If needed, press RESET after flashing. The games work offline.</p></div></div>
+        </div>
+        <div class="flash-grid">
+          <div class="flash-card primary">
+            <span class="flash-label">RECOMMENDED · FIRST INSTALL OR RECOVERY</span><h3>Install firmware</h3><p>Writes the bootloader, partitions and current game firmware. Use for a first-time install or a clean recovery.</p>
+            <esp-web-install-button manifest="manifest-factory.json"><button class="btn btn-primary flash-btn" slot="activate" type="button">Install / recover <span aria-hidden="true">↗</span></button><span class="compat-warning" slot="unsupported">Use desktop Chrome or Edge with Web Serial support.</span><span class="compat-warning" slot="not-allowed">Open this page over HTTPS to flash firmware.</span></esp-web-install-button>
+          </div>
+          <div class="flash-card"><span class="flash-label">EXISTING POCKET ARCADE · SAME PARTITION LAYOUT</span><h3>Update application</h3><p>Flashes only the application at <code>0x10000</code>. Do not use when your device has a different partition layout.</p>
+            <esp-web-install-button manifest="manifest-update.json"><button class="btn btn-outline flash-btn" slot="activate" type="button">Update firmware <span aria-hidden="true">↗</span></button><span class="compat-warning" slot="unsupported">Use desktop Chrome or Edge with Web Serial support.</span><span class="compat-warning" slot="not-allowed">Open this page over HTTPS to flash firmware.</span></esp-web-install-button>
+          </div>
+        </div>
+        <p class="build-status" id="build-status" role="status" aria-live="polite">Checking published firmware…</p>
+        <div class="warning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.7 1.9 18.4a2 2 0 0 0 1.7 3h16.8a2 2 0 0 0 1.7-3L13.7 3.7a2 2 0 0 0-3.4 0Z"/><path d="M12 9v5m0 3.2v.1" stroke-linecap="round"/></svg><p><strong>Check your board first.</strong> This firmware is only for the Elecrow CrowPanel 2.8-inch ESP32-WROOM-32 (320×240, ILI9341). Not for the ESP32-S3 Rotary Buddy or other CrowPanel models. Chip detection cannot verify the board's screen or pin wiring. If connection fails, try holding BOOT, pressing RESET briefly, then releasing BOOT. Choose “Erase device” only if you intend to clear existing flash data.</p></div>
+      </div>
+    </section>
+  </main>
+  <footer><div class="shell footer-row"><p>Open-source hobby project by <a href="https://lepczynski.it/" target="_blank" rel="noopener noreferrer">Wojciech Lepczyński</a> · MIT License</p><ul class="bottom-links"><li><a href="https://github.com/lepczynski-cloud/CrowPanel-Rotary-Buddy" target="_blank" rel="noopener noreferrer">Rotary Buddy ↗</a></li><li><a href="https://github.com/lepczynski-cloud" target="_blank" rel="noopener noreferrer">More projects ↗</a></li><li><a href="https://www.youtube.com/@WojciechLepczynski" target="_blank" rel="noopener noreferrer">YouTube ↗</a></li><li><a href="https://lepczynski.it/" target="_blank" rel="noopener noreferrer">Blog ↗</a></li></ul></div></footer>
+  <script>
+    (() => {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduceMotion && 'IntersectionObserver' in window) {
+        document.body.classList.add('motion');
+        const observer = new IntersectionObserver((entries) => {
+          for (const entry of entries) if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        }, { threshold: .09, rootMargin: '0px 0px 40px 0px' });
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+      }
+      const status = document.querySelector('#build-status');
+      Promise.all(['manifest-factory.json', 'manifest-update.json'].map(async (url) => {
+        const response = await fetch(url, { cache: 'no-store' });
+        if (!response.ok) throw new Error('Firmware manifest not published');
+        const data = await response.json();
+        if (!data.version || !data.builds?.length) throw new Error('Invalid firmware manifest');
+        return data;
+      })).then(([factory, update]) => {
+        if (factory.version !== update.version) throw new Error('Firmware version mismatch');
+        status.textContent = `Firmware v${factory.version} · Ready to install · Built from project source`;
+        status.classList.add('ok');
+      }).catch(() => {
+        status.textContent = 'Firmware is not available yet. Check the Cloudflare Pages build.';
+        status.classList.add('error');
+        document.querySelectorAll('.flash-btn').forEach((button) => { button.disabled = true; });
+      });
+    })();
+  </script>
+</body>
+</html>
