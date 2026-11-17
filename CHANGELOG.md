@@ -2,14 +2,30 @@
 
 All notable changes to this project are documented in this file.
 
-## [Unreleased] - website and installer
+## [1.3.0] - 2026-11-17
+
+### Added
+
+- **Line Four**, an original four-in-a-row game with one-player local CPU and two-player hot-seat modes, disc-drop animation and a highlighted winning sequence.
+- **Pair Quest**, a 16-card memory challenge with procedural symbols, animated flips, a solo mode and two-player turn-based scoring.
+- **Tile Slide**, a 3×3 or 4×4 number-tile puzzle using solvable random-walk scrambles, move counter, timer and sliding animation.
+- Six-card touch launcher with staged appearance and a rotating highlight, without adding image assets or increasing firmware dependencies.
+- Website cards describing all three new games without claiming to show photos of unrecorded gameplay.
+
+### Changed
+
+- Updated the firmware version to 1.3.0 and the README, site metadata and game descriptions to six games.
+- Preserved original GIFs and the embedded YouTube video, clearly marking the recorded footage as v1.2.
+- Kept the browser firmware installer and automated firmware build unchanged.
+
+## Website and installer refresh - 2026-11-16 (v1.2 firmware)
 
 - Added a lightweight animated static website with actual-device gameplay, three still photos extracted from the newest footage and an embedded YouTube video.
 - Added two ESP Web Tools installation options: verified factory firmware and application-only update.
-- Added automatic Cloudflare Pages firmware compilation, merged ESP32 flash image, SHA-256-named binary assets and manifests.
+- Added automated firmware compilation, merged ESP32 flash image, SHA-256-named binary assets and installer manifests.
 - Compressed the two gameplay GIFs and removed the redundant GitHub Actions workflow.
-- Clarified supported hardware, installer limitations and Cloudflare Pages settings in README.
-- Firmware gameplay and version remain unchanged at v1.2.0.
+- Clarified supported hardware and installer limitations in README.
+- Firmware gameplay was unchanged from v1.2.0 in this website-only update.
 
 ## [1.2.0] - 2026-08-11
 

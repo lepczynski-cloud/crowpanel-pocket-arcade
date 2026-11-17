@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build the ESP32 image and publish a static Cloudflare Pages site in web/.
+# Compile ESP32 firmware and prepare static website and installer files in web/.
 set -Eeuo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
@@ -33,7 +33,7 @@ FACTORY="$TEMP_DIR/factory.bin"
   0xe000 "$BOOT_APP" \
   0x10000 "$APP"
 
-# Refuse deployment if binary offsets, sizes or the partition scheme look wrong.
+# Reject invalid firmware images, offsets, sizes or partition layouts.
 "$VENV/bin/python" - "$FACTORY" "$APP" <<'PY'
 import hashlib
 import json
@@ -97,5 +97,5 @@ for name, path, offset in (
     assert (output / path).is_file()
     print(f'Validated {name}: version {version}, offset {offset:#x}')
 
-print('Cloudflare Pages output: web/')
+print('Website and installer files: web/')
 PY

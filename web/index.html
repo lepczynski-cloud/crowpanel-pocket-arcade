@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#080c18">
-  <meta name="description" content="CrowPanel Pocket Arcade: three original offline touchscreen games on a tiny ESP32 device. Explore real gameplay, watch the video and flash firmware from your browser.">
+  <meta name="description" content="CrowPanel Pocket Arcade: six original offline touchscreen games on a tiny ESP32 device. Explore real gameplay, watch the video and flash firmware from your browser.">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="CrowPanel Pocket Arcade | Three games. One tiny screen.">
-  <meta property="og:description" content="A tiny DIY arcade with three original games. Built for the Elecrow CrowPanel 2.8-inch ESP32 display. Install directly from your browser.">
+  <meta property="og:title" content="CrowPanel Pocket Arcade | Six games. One tiny screen.">
+  <meta property="og:description" content="A tiny DIY arcade with six original touchscreen games. Built for the Elecrow CrowPanel 2.8-inch ESP32 display. Install directly from your browser.">
   <meta property="og:image" content="https://pocket-arcade.lepczynski.it/assets/shift.webp">
   <meta property="og:url" content="https://pocket-arcade.lepczynski.it/">
   <meta name="twitter:card" content="summary_large_image">
@@ -76,6 +76,12 @@
     .game-number { display:block; margin-bottom:7px; color:var(--mint); font:750 11px/1.4 ui-monospace,monospace; letter-spacing:.12em; }
     .game-info h3 { margin:0 0 7px; font-size:21px; font-weight:760; letter-spacing:-.028em; }
     .game-info p { margin:0; font-size:13px; line-height:1.65; color:var(--muted); }
+    .game-card--new { position:relative; display:flex; align-items:stretch; min-height:215px; border-color:rgba(72,231,202,.22); background:radial-gradient(ellipse at 85% 0,rgba(72,231,202,.11),transparent 52%),linear-gradient(160deg,#141e35,#0c1426); }
+    .game-card--new:nth-child(5) { background:radial-gradient(ellipse at 85% 0,rgba(169,153,255,.14),transparent 52%),linear-gradient(160deg,#141e35,#0c1426); }
+    .game-card--new:nth-child(6) { background:radial-gradient(ellipse at 85% 0,rgba(255,210,116,.1),transparent 52%),linear-gradient(160deg,#141e35,#0c1426); }
+    .game-card--new .game-info { width:100%; padding-top:31px; }
+    .game-new { display:inline-block; margin:0 0 18px; padding:4px 8px; border-radius:6px; background:rgba(72,231,202,.11); color:var(--mint); font:750 10px/1.4 ui-monospace,monospace; letter-spacing:.075em; }
+    .game-card--new .game-info h3 { font-size:25px; }
     .watch { padding:74px 0; }
     .watch-inner { display:grid; grid-template-columns:.78fr 1.22fr; align-items:center; gap:52px; }
     .watch-inner .section-head { margin-bottom:20px; }
@@ -120,7 +126,7 @@
     @keyframes heartbeat { 0%,100% {box-shadow:0 0 0 3px rgba(72,231,202,.09);} 50%{box-shadow:0 0 0 6px rgba(72,231,202,.045);} }
     @keyframes ambient { from {transform:scale(.94) translate(-7px,7px);} to {transform:scale(1.06) translate(10px,-4px);} }
     @media (max-width:950px) { .hero { gap:36px; } .hero-visual { width:min(100%,310px); } .watch-inner { gap:32px; } .game-image { height:170px; } }
-    @media (max-width:720px) { .shell { width:min(100% - 34px,520px); } .nav { min-height:69px; } .navlinks { gap:15px; } .navlinks a:not(.source-link) { display:none; } .navlinks .source-link { padding:8px 12px; font-size:12px; } .hero { padding:58px 0 60px; grid-template-columns:1fr; min-height:0; gap:39px; } .hero h1 { font-size:clamp(47px,10vw,70px); } .hero-copy { font-size:15px; } .hero-visual { width:min(82%,320px); } .section,.watch { padding:57px 0; } .games { grid-template-columns:1fr; gap:15px; } .game-card { display:flex; min-height:160px; } .game-image { width:39%; height:auto; min-height:155px; flex:none; } .game-info { padding:21px 17px; align-self:center; } .game-info h3 { font-size:19px; } .watch-inner { grid-template-columns:1fr; gap:20px; } .install-section { padding:55px 0 68px; } .install-shell { padding:26px 20px; } .steps { grid-template-columns:1fr; gap:17px; } .flash-grid { grid-template-columns:1fr; } .footer-row { align-items:flex-start; flex-direction:column; gap:10px; } }
+    @media (max-width:720px) { .shell { width:min(100% - 34px,520px); } .nav { min-height:69px; } .navlinks { gap:15px; } .navlinks a:not(.source-link) { display:none; } .navlinks .source-link { padding:8px 12px; font-size:12px; } .hero { padding:58px 0 60px; grid-template-columns:1fr; min-height:0; gap:39px; } .hero h1 { font-size:clamp(47px,10vw,70px); } .hero-copy { font-size:15px; } .hero-visual { width:min(82%,320px); } .section,.watch { padding:57px 0; } .games { grid-template-columns:1fr; gap:15px; } .game-card { display:flex; min-height:160px; } .game-card--new { min-height:190px; } .game-image { width:39%; height:auto; min-height:155px; flex:none; } .game-info { padding:21px 17px; align-self:center; } .game-info h3 { font-size:19px; } .watch-inner { grid-template-columns:1fr; gap:20px; } .install-section { padding:55px 0 68px; } .install-shell { padding:26px 20px; } .steps { grid-template-columns:1fr; gap:17px; } .flash-grid { grid-template-columns:1fr; } .footer-row { align-items:flex-start; flex-direction:column; gap:10px; } }
     @media (max-width:375px) { .brand { font-size:12px; } .brand-icon { width:32px; height:32px; } .game-image { width:34%; } .game-info { padding:13px; } .hero-visual { width:89%; } }
     @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; animation:none !important; transition:none !important; } body.motion .reveal { opacity:1 !important; transform:none !important; } }
   </style>
@@ -145,37 +151,40 @@
       <div class="reveal">
         <p class="eyebrow"><span class="dot"></span> OPEN SOURCE · ESP32 · 2.8" TOUCHSCREEN</p>
         <h1 id="hero-title">Tiny screen.<br><span class="gradient-text">Big arcade energy.</span></h1>
-        <p class="hero-copy">Three original touchscreen games in the palm of your hand. No Wi-Fi, accounts, SD cards or complicated setup. Just connect, tap, swipe and play.</p>
+        <p class="hero-copy">Six original touchscreen games in the palm of your hand. No Wi-Fi, accounts, SD cards or complicated setup. Just connect, tap, swipe and play.</p>
         <div class="actions">
           <a class="btn btn-primary" href="#install">Install firmware <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
           <a class="btn btn-outline" href="https://github.com/lepczynski-cloud/crowpanel-pocket-arcade" target="_blank" rel="noopener noreferrer">Explore the code ↗</a>
         </div>
-        <div class="specs" aria-label="Project highlights"><span class="spec"><b>03</b> GAMES</span><span class="spec"><b>320×240</b> DISPLAY</span><span class="spec"><b>100%</b> OFFLINE</span></div>
+        <div class="specs" aria-label="Project highlights"><span class="spec"><b>06</b> GAMES</span><span class="spec"><b>320×240</b> DISPLAY</span><span class="spec"><b>100%</b> OFFLINE</span></div>
       </div>
       <div class="hero-visual reveal">
         <div class="media-frame">
-          <span class="live-tag"><span class="dot"></span> ACTUAL DEVICE · LATEST VERSION</span>
+          <span class="live-tag"><span class="dot"></span> REAL DEVICE · EARLIER VERSION</span>
           <picture>
             <source media="(prefers-reduced-motion: reduce)" srcset="assets/shift.webp" type="image/webp">
-            <img src="assets/arcade-v2.gif" alt="Real Elecrow CrowPanel Pocket Arcade running the current three-game firmware, filmed in the creator's hands" width="320" height="568" fetchpriority="high">
+            <img src="assets/arcade-v2.gif" alt="Real CrowPanel Pocket Arcade gameplay recording from firmware v1.2, showing three of the six available games" width="320" height="568" fetchpriority="high">
           </picture>
         </div>
-        <p class="real-caption">Real hardware and gameplay, not a rendered mockup.</p>
+        <p class="real-caption">Footage from firmware v1.2. The three additional games in v1.3 are not shown yet.</p>
       </div>
     </section>
 
     <section class="section shell" id="games" aria-labelledby="games-title">
-      <div class="section-head reveal"><p class="eyebrow">THREE GAMES · ZERO EXTRA HARDWARE</p><h2 id="games-title">Pick your next obsession.</h2><p>Fast reflexes, a clever puzzle or just one more run. All graphics are drawn on the ESP32 itself.</p></div>
+      <div class="section-head reveal"><p class="eyebrow">SIX GAMES · ZERO EXTRA HARDWARE</p><h2 id="games-title">Pick your next obsession.</h2><p>Arcade action, strategy, memory and number puzzles. All six games run offline and draw their own graphics directly on the ESP32.</p></div>
       <div class="games">
         <article class="game-card reveal"><div class="game-image"><img src="assets/burst.webp" width="540" height="550" loading="lazy" alt="Real CrowPanel running Burst Hunt, the touchscreen target game"></div><div class="game-info"><span class="game-number">01 / REACTION</span><h3>Burst Hunt</h3><p>Hit the targets, dodge the mines and build your combo.</p></div></article>
         <article class="game-card reveal"><div class="game-image"><img src="assets/shift.webp" width="540" height="550" loading="lazy" alt="Real CrowPanel running Shift Vault, a sliding-block logic puzzle"></div><div class="game-info"><span class="game-number">02 / PUZZLE</span><h3>Shift Vault</h3><p>Swipe the pieces. Guide the golden key to the exit.</p></div></article>
         <article class="game-card reveal"><div class="game-image"><img src="assets/sprint.webp" width="540" height="550" loading="lazy" alt="Real CrowPanel running Star Pod Sprint, a one-touch runner"></div><div class="game-info"><span class="game-number">03 / RUNNER</span><h3>Star Pod Sprint</h3><p>One tap to jump. Avoid obstacles and collect coins.</p></div></article>
+        <article class="game-card game-card--new reveal"><div class="game-info"><span class="game-new">NEW IN v1.3</span><span class="game-number">04 / STRATEGY · SOLO OR 2P</span><h3>Line Four</h3><p>Drop glowing discs to make four in a row. Challenge the ESP32 opponent or a friend on the same screen.</p></div></article>
+        <article class="game-card game-card--new reveal"><div class="game-info"><span class="game-new">NEW IN v1.3</span><span class="game-number">05 / MEMORY · SOLO OR 2P</span><h3>Pair Quest</h3><p>Turn over cards and discover eight pairs. Solve it solo or compete locally to collect the most pairs.</p></div></article>
+        <article class="game-card game-card--new reveal"><div class="game-info"><span class="game-new">NEW IN v1.3</span><span class="game-number">06 / NUMBER PUZZLE</span><h3>Tile Slide</h3><p>Slide numbered tiles into the empty space to restore the order. Choose a 3×3 or 4×4 solvable board.</p></div></article>
       </div>
     </section>
 
     <section class="watch shell" id="watch" aria-labelledby="watch-title">
       <div class="watch-inner">
-        <div class="reveal"><div class="section-head"><p class="eyebrow">REAL GAMEPLAY</p><h2 id="watch-title">Small device.<br>Real fun.</h2><p>Watch the three games in action on the actual CrowPanel display. The looping demo above is footage from the newest version.</p></div><a class="watch-link" href="https://www.youtube.com/watch?v=BkuglAy6qOQ" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a></div>
+        <div class="reveal"><div class="section-head"><p class="eyebrow">REAL GAMEPLAY</p><h2 id="watch-title">Small device.<br>Real fun.</h2><p>Watch real CrowPanel footage of the original three games. Line Four, Pair Quest and Tile Slide are new in v1.3 and will get their own footage in a future update.</p></div><a class="watch-link" href="https://www.youtube.com/watch?v=BkuglAy6qOQ" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a></div>
         <div class="video-wrap reveal"><iframe title="CrowPanel Pocket Arcade gameplay on YouTube" loading="lazy" src="https://www.youtube-nocookie.com/embed/BkuglAy6qOQ?rel=0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
       </div>
     </section>
@@ -228,7 +237,7 @@
         status.textContent = `Firmware v${factory.version} · Ready to install · Built from project source`;
         status.classList.add('ok');
       }).catch(() => {
-        status.textContent = 'Firmware is not available yet. Check the Cloudflare Pages build.';
+        status.textContent = 'Firmware files are temporarily unavailable. Please check back later.';
         status.classList.add('error');
         document.querySelectorAll('.flash-btn').forEach((button) => { button.disabled = true; });
       });
