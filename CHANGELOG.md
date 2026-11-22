@@ -2,6 +2,27 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.4.0] - 2026-11-22
+
+### Added
+
+- Built-in **About the Builder** screen with the message **Small screens. Big ideas.**, a short introduction and a fixed QR code linking to `https://links.lepczynski.it/`.
+- Touch-enabled `lepczynski.it` label in the lower-right corner of the launcher.
+- Optimised current-device previews for the complete six-game lineup and the three games introduced in v1.3.
+- Matching About section and QR link on the project website.
+
+### Fixed
+
+- Removed visible right-panel flashing in Line Four, Pair Quest and Tile Slide by separating static panel drawing from targeted value updates.
+- Pair Quest and Tile Slide now update only their timer text once per second instead of repainting the full panel.
+
+### Changed
+
+- Slowed the rotating launcher highlight from 480 ms to 750 ms per card.
+- Replaced the launcher footer with `6 GAMES | OFFLINE` and the creator link.
+- Updated the firmware version, README, website metadata, release copy and social preview to v1.4.0.
+- Converted legacy gameplay GIFs to animated WebP, reducing media weight while preserving animation.
+
 ## [1.3.0] - 2026-11-17
 
 ### Added

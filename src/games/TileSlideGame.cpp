@@ -122,6 +122,7 @@ void TileSlideGame::startGame(uint32_t now) {
   Ui::fillBackground(tft_);
   Ui::drawTopBar(tft_, "TILE SLIDE");
   drawBoard();
+  drawSideFrame();
   drawSide(now);
 }
 
@@ -159,28 +160,46 @@ void TileSlideGame::drawBoard() {
   for (uint8_t i = 0; i < dimension_ * dimension_; ++i) drawCell(i);
 }
 
-void TileSlideGame::drawSide(uint32_t now) {
+void TileSlideGame::drawSideFrame() {
   tft_.fillRoundRect(196, 48, 120, 185, 10, Theme::PANEL);
   tft_.drawRoundRect(196, 48, 120, 185, 10, Theme::BORDER);
   tft_.setTextDatum(MC_DATUM);
   tft_.setTextFont(1);
   tft_.setTextColor(Theme::MUTED, Theme::PANEL);
   tft_.drawString(dimension_ == 3 ? "3 x 3 / CLASSIC" : "4 x 4 / EXPERT", 256, 63);
-  char text[24];
+  Ui::drawButton(tft_, NEW_BUTTON, "RESHUFFLE", Theme::CYAN_DARK, Theme::WHITE, Theme::CYAN);
+  Ui::drawButton(tft_, MODE_BUTTON, "SIZE", Theme::PANEL_2, Theme::TEXT, Theme::BORDER);
+}
+
+void TileSlideGame::drawElapsed(uint32_t now) {
+  const uint32_t elapsed = (now - startedAt_) / 1000;
+  char text[16];
+  std::snprintf(text, sizeof(text), "%02lu:%02lu", static_cast<unsigned long>(elapsed / 60),
+                static_cast<unsigned long>(elapsed % 60));
+  tft_.setTextDatum(MC_DATUM);
   tft_.setTextFont(2);
+  tft_.setTextPadding(108);
+  tft_.setTextColor(Theme::TEXT, Theme::PANEL);
+  tft_.drawString(text, 256, 121);
+  tft_.setTextPadding(0);
+}
+
+void TileSlideGame::drawSide(uint32_t now) {
+  char text[24];
+  tft_.setTextDatum(MC_DATUM);
+  tft_.setTextFont(2);
+  tft_.setTextPadding(108);
   tft_.setTextColor(Theme::CYAN, Theme::PANEL);
   std::snprintf(text, sizeof(text), "%u MOVES", moves_);
   tft_.drawString(text, 256, 91);
-  const uint32_t elapsed = (now - startedAt_) / 1000;
-  std::snprintf(text, sizeof(text), "%02lu:%02lu", static_cast<unsigned long>(elapsed / 60),
-                static_cast<unsigned long>(elapsed % 60));
-  tft_.setTextColor(Theme::TEXT, Theme::PANEL);
-  tft_.drawString(text, 256, 121);
+  tft_.setTextPadding(0);
+  drawElapsed(now);
+
   tft_.setTextFont(1);
+  tft_.setTextPadding(108);
   tft_.setTextColor(phase_ == Phase::Finished ? Theme::LIME : Theme::MUTED, Theme::PANEL);
   tft_.drawString(phase_ == Phase::Finished ? "SOLVED!" : "TAP TO MOVE", 256, 147);
-  Ui::drawButton(tft_, NEW_BUTTON, "RESHUFFLE", Theme::CYAN_DARK, Theme::WHITE, Theme::CYAN);
-  Ui::drawButton(tft_, MODE_BUTTON, "SIZE", Theme::PANEL_2, Theme::TEXT, Theme::BORDER);
+  tft_.setTextPadding(0);
 }
 
 int8_t TileSlideGame::tileAt(uint16_t x, uint16_t y) const {
@@ -262,7 +281,7 @@ void TileSlideGame::update(const InputFrame& input, uint32_t now) {
   if (phase_ != Phase::Playing) return;
   if (now - lastClock_ >= 1000) {
     lastClock_ = now;
-    drawSide(now);
+    drawElapsed(now);
   }
   if (!input.released || input.swipe) return;
   const int8_t index = tileAt(input.x, input.y);

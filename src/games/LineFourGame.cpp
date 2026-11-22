@@ -94,10 +94,11 @@ void LineFourGame::drawGame() {
   for (uint8_t row = 0; row < ROWS; ++row) {
     for (uint8_t col = 0; col < COLS; ++col) drawCell(row, col);
   }
-  drawSide();
+  drawSideFrame();
+  drawStatus();
 }
 
-void LineFourGame::drawSide() {
+void LineFourGame::drawSideFrame() {
   tft_.fillRoundRect(216, 48, 100, 185, 10, Theme::PANEL);
   tft_.drawRoundRect(216, 48, 100, 185, 10, Theme::BORDER);
   tft_.setTextDatum(MC_DATUM);
@@ -109,25 +110,37 @@ void LineFourGame::drawSide() {
   tft_.setTextColor(Theme::TEXT, Theme::PANEL);
   tft_.drawString("P1", 243, 105);
   tft_.drawString(solo_ ? "CPU" : "P2", 289, 105);
+  Ui::drawButton(tft_, NEW_BUTTON, "RESTART", Theme::CYAN_DARK, Theme::WHITE, Theme::CYAN);
+  Ui::drawButton(tft_, MODE_BUTTON, "MODE", Theme::PANEL_2, Theme::TEXT, Theme::BORDER);
+}
+
+void LineFourGame::drawStatus() {
+  tft_.setTextDatum(MC_DATUM);
   tft_.setTextFont(2);
+  tft_.setTextPadding(92);
   if (phase_ == Phase::Finished) {
     tft_.setTextColor(winner_ == 3 ? Theme::YELLOW :
                           (winner_ == 1 ? Theme::CYAN : Theme::PINK), Theme::PANEL);
     tft_.drawString(winner_ == 3 ? "DRAW!" : "WINNER!", 266, 129);
-    tft_.setTextFont(1);
-    tft_.drawString(winner_ == 3 ? "NO MORE MOVES" :
-                      (winner_ == 1 ? "PLAYER ONE" : (solo_ ? "THE CPU" : "PLAYER TWO")),
-                    266, 146);
   } else {
     tft_.setTextColor(turn_ == 1 ? Theme::CYAN : Theme::PINK, Theme::PANEL);
     tft_.drawString((solo_ && turn_ == 2) ? "CPU TURN" :
                     (turn_ == 1 ? "P1 TURN" : "P2 TURN"), 266, 129);
-    tft_.setTextFont(1);
-    tft_.setTextColor(Theme::MUTED, Theme::PANEL);
-    tft_.drawString("TAP A COLUMN", 266, 147);
   }
-  Ui::drawButton(tft_, NEW_BUTTON, "RESTART", Theme::CYAN_DARK, Theme::WHITE, Theme::CYAN);
-  Ui::drawButton(tft_, MODE_BUTTON, "MODE", Theme::PANEL_2, Theme::TEXT, Theme::BORDER);
+  tft_.setTextPadding(0);
+
+  tft_.setTextFont(1);
+  tft_.setTextPadding(92);
+  if (phase_ == Phase::Finished) {
+    tft_.setTextColor(Theme::TEXT, Theme::PANEL);
+    tft_.drawString(winner_ == 3 ? "NO MORE MOVES" :
+                      (winner_ == 1 ? "PLAYER ONE" : (solo_ ? "THE CPU" : "PLAYER TWO")),
+                    266, 146);
+  } else {
+    tft_.setTextColor(Theme::MUTED, Theme::PANEL);
+    tft_.drawString("TAP A COLUMN", 266, 146);
+  }
+  tft_.setTextPadding(0);
 }
 
 int8_t LineFourGame::landingRow(uint8_t col) const {
@@ -236,7 +249,7 @@ void LineFourGame::finishDrop(uint32_t now) {
     turn_ = turn_ == 1 ? 2 : 1;
     if (solo_ && turn_ == 2) cpuReadyAt_ = now + 430;
   }
-  drawSide();
+  drawStatus();
 }
 
 void LineFourGame::update(const InputFrame& input, uint32_t now) {

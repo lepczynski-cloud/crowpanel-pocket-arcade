@@ -8,9 +8,12 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="CrowPanel Pocket Arcade | Six games. One tiny screen.">
   <meta property="og:description" content="A tiny DIY arcade with six original touchscreen games. Built for the Elecrow CrowPanel 2.8-inch ESP32 display. Install directly from your browser.">
-  <meta property="og:image" content="https://pocket-arcade.lepczynski.it/assets/shift.webp">
+  <meta property="og:image" content="https://pocket-arcade.lepczynski.it/assets/all-six-games.webp">
+  <meta property="og:image:alt" content="CrowPanel Pocket Arcade running on the real 2.8-inch ESP32 device">
   <meta property="og:url" content="https://pocket-arcade.lepczynski.it/">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://pocket-arcade.lepczynski.it/assets/all-six-games.webp">
+  <meta name="author" content="Wojciech Lepczyński">
   <link rel="canonical" href="https://pocket-arcade.lepczynski.it/">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230c1124'/%3E%3Crect x='10' y='18' width='44' height='28' rx='8' fill='%2329dfca'/%3E%3Cpath d='M21 32h14m-7-7v14' stroke='%230a1223' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='43' cy='28' r='3' fill='%230a1223'/%3E%3Ccircle cx='48' cy='35' r='3' fill='%230a1223'/%3E%3C/svg%3E">
   <title>CrowPanel Pocket Arcade | Browser firmware installer</title>
@@ -82,6 +85,23 @@
     .game-card--new .game-info { width:100%; padding-top:31px; }
     .game-new { display:inline-block; margin:0 0 18px; padding:4px 8px; border-radius:6px; background:rgba(72,231,202,.11); color:var(--mint); font:750 10px/1.4 ui-monospace,monospace; letter-spacing:.075em; }
     .game-card--new .game-info h3 { font-size:25px; }
+    .release { padding:20px 0 74px; }
+    .release-card { display:grid; grid-template-columns:minmax(0,1fr) minmax(250px,.58fr); align-items:center; gap:46px; padding:42px; border:1px solid rgba(72,231,202,.2); border-radius:24px; background:radial-gradient(ellipse at 86% 16%,rgba(72,231,202,.12),transparent 50%),linear-gradient(145deg,#111d31,#0c1425); }
+    .release-card .section-head { margin:0; }
+    .release-points { display:grid; gap:12px; margin:25px 0 0; padding:0; list-style:none; }
+    .release-points li { position:relative; padding-left:22px; color:#c5d3e4; font-size:13px; }
+    .release-points li::before { content:""; position:absolute; left:0; top:.62em; width:8px; height:8px; border-radius:50%; background:var(--mint); box-shadow:0 0 0 4px rgba(72,231,202,.08); }
+    .release-media { margin:0; justify-self:center; width:min(100%,280px); }
+    .release-media img { width:100%; aspect-ratio:9/16; object-fit:cover; border-radius:19px; border:1px solid rgba(255,255,255,.17); box-shadow:0 24px 50px rgba(0,0,0,.32); }
+    .release-media figcaption { margin-top:11px; color:#8295b1; font-size:11px; text-align:center; }
+    .builder { padding:14px 0 76px; }
+    .builder-card { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:48px; padding:39px 44px; border:1px solid var(--line); border-radius:24px; background:linear-gradient(140deg,rgba(21,31,54,.94),rgba(11,18,34,.95)); }
+    .builder-card h2 { margin:0 0 14px; font-size:clamp(32px,4vw,51px); line-height:1.08; letter-spacing:-.05em; }
+    .builder-copy { max-width:650px; }
+    .builder-copy > p:not(.eyebrow) { max-width:600px; margin-bottom:17px; color:var(--muted); }
+    .builder-qr { display:grid; justify-items:center; gap:10px; padding:14px; border-radius:17px; background:#f7fbff; color:#071321; text-decoration:none; }
+    .builder-qr img { width:132px; height:132px; image-rendering:pixelated; }
+    .builder-qr span { font:800 10px/1.2 ui-monospace,monospace; letter-spacing:.1em; }
     .watch { padding:74px 0; }
     .watch-inner { display:grid; grid-template-columns:.78fr 1.22fr; align-items:center; gap:52px; }
     .watch-inner .section-head { margin-bottom:20px; }
@@ -126,7 +146,7 @@
     @keyframes heartbeat { 0%,100% {box-shadow:0 0 0 3px rgba(72,231,202,.09);} 50%{box-shadow:0 0 0 6px rgba(72,231,202,.045);} }
     @keyframes ambient { from {transform:scale(.94) translate(-7px,7px);} to {transform:scale(1.06) translate(10px,-4px);} }
     @media (max-width:950px) { .hero { gap:36px; } .hero-visual { width:min(100%,310px); } .watch-inner { gap:32px; } .game-image { height:170px; } }
-    @media (max-width:720px) { .shell { width:min(100% - 34px,520px); } .nav { min-height:69px; } .navlinks { gap:15px; } .navlinks a:not(.source-link) { display:none; } .navlinks .source-link { padding:8px 12px; font-size:12px; } .hero { padding:58px 0 60px; grid-template-columns:1fr; min-height:0; gap:39px; } .hero h1 { font-size:clamp(47px,10vw,70px); } .hero-copy { font-size:15px; } .hero-visual { width:min(82%,320px); } .section,.watch { padding:57px 0; } .games { grid-template-columns:1fr; gap:15px; } .game-card { display:flex; min-height:160px; } .game-card--new { min-height:190px; } .game-image { width:39%; height:auto; min-height:155px; flex:none; } .game-info { padding:21px 17px; align-self:center; } .game-info h3 { font-size:19px; } .watch-inner { grid-template-columns:1fr; gap:20px; } .install-section { padding:55px 0 68px; } .install-shell { padding:26px 20px; } .steps { grid-template-columns:1fr; gap:17px; } .flash-grid { grid-template-columns:1fr; } .footer-row { align-items:flex-start; flex-direction:column; gap:10px; } }
+    @media (max-width:720px) { .shell { width:min(100% - 34px,520px); } .nav { min-height:69px; } .navlinks { gap:15px; } .navlinks a:not(.source-link) { display:none; } .navlinks .source-link { padding:8px 12px; font-size:12px; } .hero { padding:58px 0 60px; grid-template-columns:1fr; min-height:0; gap:39px; } .hero h1 { font-size:clamp(47px,10vw,70px); } .hero-copy { font-size:15px; } .hero-visual { width:min(82%,320px); } .section,.watch { padding:57px 0; } .games { grid-template-columns:1fr; gap:15px; } .game-card { display:flex; min-height:160px; } .game-card--new { min-height:190px; } .game-image { width:39%; height:auto; min-height:155px; flex:none; } .game-info { padding:21px 17px; align-self:center; } .game-info h3 { font-size:19px; } .release { padding:5px 0 57px; } .release-card { grid-template-columns:1fr; gap:30px; padding:27px 21px; } .release-media { width:min(74%,270px); } .watch-inner { grid-template-columns:1fr; gap:20px; } .builder { padding:0 0 58px; } .builder-card { grid-template-columns:1fr; padding:28px 22px; gap:27px; } .builder-qr { justify-self:start; } .install-section { padding:55px 0 68px; } .install-shell { padding:26px 20px; } .steps { grid-template-columns:1fr; gap:17px; } .flash-grid { grid-template-columns:1fr; } .footer-row { align-items:flex-start; flex-direction:column; gap:10px; } }
     @media (max-width:375px) { .brand { font-size:12px; } .brand-icon { width:32px; height:32px; } .game-image { width:34%; } .game-info { padding:13px; } .hero-visual { width:89%; } }
     @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; animation:none !important; transition:none !important; } body.motion .reveal { opacity:1 !important; transform:none !important; } }
   </style>
@@ -140,7 +160,7 @@
         <span>POCKET<br>ARCADE</span>
       </a>
       <div class="navlinks">
-        <a href="#games">The games</a><a href="#watch">Video</a><a href="#install">Install</a>
+        <a href="#games">The games</a><a href="#watch">Video</a><a href="#builder">Builder</a><a href="#install">Install</a>
         <a class="source-link" href="https://github.com/lepczynski-cloud/crowpanel-pocket-arcade" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </div>
     </nav>
@@ -160,13 +180,10 @@
       </div>
       <div class="hero-visual reveal">
         <div class="media-frame">
-          <span class="live-tag"><span class="dot"></span> REAL DEVICE · EARLIER VERSION</span>
-          <picture>
-            <source media="(prefers-reduced-motion: reduce)" srcset="assets/shift.webp" type="image/webp">
-            <img src="assets/arcade-v2.gif" alt="Real CrowPanel Pocket Arcade gameplay recording from firmware v1.2, showing three of the six available games" width="320" height="568" fetchpriority="high">
-          </picture>
+          <span class="live-tag"><span class="dot"></span> REAL DEVICE · SIX-GAME BUILD</span>
+          <img src="assets/all-six-games.webp" alt="Real CrowPanel Pocket Arcade device from the recording that presents all six games" width="360" height="640" fetchpriority="high">
         </div>
-        <p class="real-caption">Footage from firmware v1.2. The three additional games in v1.3 are not shown yet.</p>
+        <p class="real-caption">Frame from the new recording that presents the complete six-game lineup.</p>
       </div>
     </section>
 
@@ -176,16 +193,50 @@
         <article class="game-card reveal"><div class="game-image"><img src="assets/burst.webp" width="540" height="550" loading="lazy" alt="Real CrowPanel running Burst Hunt, the touchscreen target game"></div><div class="game-info"><span class="game-number">01 / REACTION</span><h3>Burst Hunt</h3><p>Hit the targets, dodge the mines and build your combo.</p></div></article>
         <article class="game-card reveal"><div class="game-image"><img src="assets/shift.webp" width="540" height="550" loading="lazy" alt="Real CrowPanel running Shift Vault, a sliding-block logic puzzle"></div><div class="game-info"><span class="game-number">02 / PUZZLE</span><h3>Shift Vault</h3><p>Swipe the pieces. Guide the golden key to the exit.</p></div></article>
         <article class="game-card reveal"><div class="game-image"><img src="assets/sprint.webp" width="540" height="550" loading="lazy" alt="Real CrowPanel running Star Pod Sprint, a one-touch runner"></div><div class="game-info"><span class="game-number">03 / RUNNER</span><h3>Star Pod Sprint</h3><p>One tap to jump. Avoid obstacles and collect coins.</p></div></article>
-        <article class="game-card game-card--new reveal"><div class="game-info"><span class="game-new">NEW IN v1.3</span><span class="game-number">04 / STRATEGY · SOLO OR 2P</span><h3>Line Four</h3><p>Drop glowing discs to make four in a row. Challenge the ESP32 opponent or a friend on the same screen.</p></div></article>
-        <article class="game-card game-card--new reveal"><div class="game-info"><span class="game-new">NEW IN v1.3</span><span class="game-number">05 / MEMORY · SOLO OR 2P</span><h3>Pair Quest</h3><p>Turn over cards and discover eight pairs. Solve it solo or compete locally to collect the most pairs.</p></div></article>
-        <article class="game-card game-card--new reveal"><div class="game-info"><span class="game-new">NEW IN v1.3</span><span class="game-number">06 / NUMBER PUZZLE</span><h3>Tile Slide</h3><p>Slide numbered tiles into the empty space to restore the order. Choose a 3×3 or 4×4 solvable board.</p></div></article>
+        <article class="game-card game-card--new reveal"><div class="game-info"><span class="game-new">ADDED IN v1.3</span><span class="game-number">04 / STRATEGY · SOLO OR 2P</span><h3>Line Four</h3><p>Drop glowing discs to make four in a row. Challenge the ESP32 opponent or a friend on the same screen.</p></div></article>
+        <article class="game-card game-card--new reveal"><div class="game-info"><span class="game-new">ADDED IN v1.3</span><span class="game-number">05 / MEMORY · SOLO OR 2P</span><h3>Pair Quest</h3><p>Turn over cards and discover eight pairs. Solve it solo or compete locally to collect the most pairs.</p></div></article>
+        <article class="game-card game-card--new reveal"><div class="game-info"><span class="game-new">ADDED IN v1.3</span><span class="game-number">06 / NUMBER PUZZLE</span><h3>Tile Slide</h3><p>Slide numbered tiles into the empty space to restore the order. Choose a 3×3 or 4×4 solvable board.</p></div></article>
+      </div>
+    </section>
+
+    <section class="release shell" aria-labelledby="release-title">
+      <div class="release-card reveal">
+        <div class="section-head">
+          <p class="eyebrow">CURRENT SIX-GAME BUILD</p>
+          <h2 id="release-title">Three more reasons to pick it up again.</h2>
+          <p>The same tiny ESP32 arcade now adds strategy, memory and a classic number puzzle without requiring extra hardware, Wi-Fi or a separate runtime.</p>
+          <ul class="release-points">
+            <li>Line Four with a local CPU opponent or two-player mode</li>
+            <li>Pair Quest for solo play or head-to-head matching</li>
+            <li>Tile Slide with solvable 3×3 and 4×4 boards</li>
+          </ul>
+        </div>
+        <figure class="release-media">
+          <img src="assets/new-games.webp" width="360" height="640" loading="lazy" alt="Real CrowPanel Pocket Arcade from the recording featuring Line Four, Pair Quest and Tile Slide">
+          <figcaption>Frame from the recording of the three additional games.</figcaption>
+        </figure>
       </div>
     </section>
 
     <section class="watch shell" id="watch" aria-labelledby="watch-title">
       <div class="watch-inner">
-        <div class="reveal"><div class="section-head"><p class="eyebrow">REAL GAMEPLAY</p><h2 id="watch-title">Small device.<br>Real fun.</h2><p>Watch real CrowPanel footage of the original three games. Line Four, Pair Quest and Tile Slide are new in v1.3 and will get their own footage in a future update.</p></div><a class="watch-link" href="https://www.youtube.com/watch?v=BkuglAy6qOQ" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a></div>
+        <div class="reveal"><div class="section-head"><p class="eyebrow">REAL GAMEPLAY</p><h2 id="watch-title">Small device.<br>Real fun.</h2><p>Watch the original three-game build in motion. The current release keeps those games and expands the same device to six, with the newest recording previewed above.</p></div><a class="watch-link" href="https://www.youtube.com/watch?v=BkuglAy6qOQ" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a></div>
         <div class="video-wrap reveal"><iframe title="CrowPanel Pocket Arcade gameplay on YouTube" loading="lazy" src="https://www.youtube-nocookie.com/embed/BkuglAy6qOQ?rel=0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      </div>
+    </section>
+
+    <section class="builder shell" id="builder" aria-labelledby="builder-title">
+      <div class="builder-card reveal">
+        <div class="builder-copy">
+          <p class="eyebrow">ABOUT THE BUILDER</p>
+          <h2 id="builder-title">Small screens.<br><span class="gradient-text">Big ideas.</span></h2>
+          <p>Hi, I'm Wojtek. I turn tiny hardware into useful tools, unusual gadgets and pocket-sized games.</p>
+          <a class="watch-link" href="https://links.lepczynski.it/" target="_blank" rel="noopener noreferrer">GitHub, YouTube, blog and LinkedIn ↗</a>
+        </div>
+        <a class="builder-qr" href="https://links.lepczynski.it/" target="_blank" rel="noopener noreferrer" aria-label="Open Wojtek's GitHub, YouTube, blog and LinkedIn links">
+          <img src="assets/links-qr.png" width="99" height="99" loading="lazy" alt="QR code linking to links.lepczynski.it">
+          <span>SCAN FOR MORE</span>
+        </a>
       </div>
     </section>
 
@@ -211,7 +262,7 @@
       </div>
     </section>
   </main>
-  <footer><div class="shell footer-row"><p>Open-source hobby project by <a href="https://lepczynski.it/" target="_blank" rel="noopener noreferrer">Wojciech Lepczyński</a> · MIT License</p><ul class="bottom-links"><li><a href="https://github.com/lepczynski-cloud/CrowPanel-Rotary-Buddy" target="_blank" rel="noopener noreferrer">Rotary Buddy ↗</a></li><li><a href="https://github.com/lepczynski-cloud" target="_blank" rel="noopener noreferrer">More projects ↗</a></li><li><a href="https://www.youtube.com/@WojciechLepczynski" target="_blank" rel="noopener noreferrer">YouTube ↗</a></li><li><a href="https://lepczynski.it/" target="_blank" rel="noopener noreferrer">Blog ↗</a></li></ul></div></footer>
+  <footer><div class="shell footer-row"><p>Open-source hobby project by <a href="https://lepczynski.it/" target="_blank" rel="noopener noreferrer">Wojciech Lepczyński</a> · MIT License</p><ul class="bottom-links"><li><a href="https://links.lepczynski.it/" target="_blank" rel="noopener noreferrer">All links ↗</a></li><li><a href="https://github.com/lepczynski-cloud" target="_blank" rel="noopener noreferrer">More projects ↗</a></li><li><a href="https://www.youtube.com/@WojciechLepczynski" target="_blank" rel="noopener noreferrer">YouTube ↗</a></li><li><a href="https://lepczynski.it/" target="_blank" rel="noopener noreferrer">Blog ↗</a></li></ul></div></footer>
   <script>
     (() => {
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

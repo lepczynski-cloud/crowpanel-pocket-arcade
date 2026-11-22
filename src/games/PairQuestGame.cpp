@@ -129,6 +129,7 @@ void PairQuestGame::startGame(uint32_t now) {
   Ui::fillBackground(tft_);
   Ui::drawTopBar(tft_, "PAIR QUEST");
   drawBoard();
+  drawSideFrame();
   drawSide(now);
 }
 
@@ -163,26 +164,47 @@ void PairQuestGame::drawBoard() {
   for (uint8_t i = 0; i < CARDS; ++i) drawCard(i);
 }
 
-void PairQuestGame::drawSide(uint32_t now) {
+void PairQuestGame::drawSideFrame() {
   tft_.fillRoundRect(226, 48, 90, 185, 10, Theme::PANEL);
   tft_.drawRoundRect(226, 48, 90, 185, 10, Theme::BORDER);
   tft_.setTextDatum(MC_DATUM);
   tft_.setTextFont(1);
   tft_.setTextColor(Theme::MUTED, Theme::PANEL);
   tft_.drawString(solo_ ? "SOLO" : "LOCAL 2P", 271, 59);
+  Ui::drawButton(tft_, NEW_BUTTON, "NEW", Theme::CYAN_DARK, Theme::WHITE, Theme::CYAN);
+  Ui::drawButton(tft_, MODE_BUTTON, "MODE", Theme::PANEL_2, Theme::TEXT, Theme::BORDER);
+}
+
+void PairQuestGame::drawElapsed(uint32_t now) {
+  const uint32_t elapsed = (now - startedAt_) / 1000;
+  char score[16];
+  std::snprintf(score, sizeof(score), "%02lu:%02lu", static_cast<unsigned long>(elapsed / 60),
+                static_cast<unsigned long>(elapsed % 60));
+  tft_.setTextDatum(MC_DATUM);
+  tft_.setTextFont(1);
+  tft_.setTextPadding(82);
+  tft_.setTextColor(Theme::WHITE, Theme::PANEL);
+  tft_.drawString(score, 271, 124);
+  tft_.setTextPadding(0);
+}
+
+void PairQuestGame::drawSide(uint32_t now) {
   char score[24];
-  tft_.setTextColor(Theme::CYAN, Theme::PANEL);
+  tft_.setTextDatum(MC_DATUM);
+  tft_.setTextFont(1);
+  tft_.setTextPadding(82);
   if (solo_) {
+    tft_.setTextColor(Theme::CYAN, Theme::PANEL);
     std::snprintf(score, sizeof(score), "%u / 8 PAIRS", matches_);
     tft_.drawString(score, 271, 81);
     tft_.setTextColor(Theme::WHITE, Theme::PANEL);
     std::snprintf(score, sizeof(score), "%u MOVES", tries_);
     tft_.drawString(score, 271, 102);
-    const uint32_t elapsed = (now - startedAt_) / 1000;
-    std::snprintf(score, sizeof(score), "%02lu:%02lu", static_cast<unsigned long>(elapsed / 60),
-                  static_cast<unsigned long>(elapsed % 60));
-    tft_.drawString(score, 271, 124);
+    tft_.setTextPadding(0);
+    drawElapsed(now);
+    tft_.setTextPadding(82);
   } else {
+    tft_.setTextColor(Theme::CYAN, Theme::PANEL);
     std::snprintf(score, sizeof(score), "P1: %u", points_[0]);
     tft_.drawString(score, 271, 81);
     tft_.setTextColor(Theme::PINK, Theme::PANEL);
@@ -199,8 +221,7 @@ void PairQuestGame::drawSide(uint32_t now) {
   } else {
     tft_.drawString("FLIP 2 CARDS", 271, 146);
   }
-  Ui::drawButton(tft_, NEW_BUTTON, "NEW", Theme::CYAN_DARK, Theme::WHITE, Theme::CYAN);
-  Ui::drawButton(tft_, MODE_BUTTON, "MODE", Theme::PANEL_2, Theme::TEXT, Theme::BORDER);
+  tft_.setTextPadding(0);
 }
 
 int8_t PairQuestGame::at(uint16_t x, uint16_t y) const {
@@ -292,7 +313,7 @@ void PairQuestGame::update(const InputFrame& input, uint32_t now) {
   }
   if (solo_ && now - lastClock_ >= 1000) {
     lastClock_ = now;
-    drawSide(now);
+    drawElapsed(now);
   }
   if (!input.pressed) return;
   const int8_t index = at(input.x, input.y);

@@ -43,7 +43,8 @@ class LineFourGame {
   void drawCell(uint8_t row, uint8_t col);
   void drawColumn(uint8_t col);
   void drawDisc(int16_t x, int16_t y, uint8_t player, uint8_t radius = 11);
-  void drawSide();
+  void drawSideFrame();
+  void drawStatus();
   void newGame(uint32_t now);
   int8_t landingRow(uint8_t col) const;
   bool checkWin(uint8_t row, uint8_t col, uint8_t player, bool store);

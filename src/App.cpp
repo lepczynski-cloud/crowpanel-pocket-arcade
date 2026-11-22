@@ -3,11 +3,13 @@
 #include <Arduino.h>
 #include <cstdio>
 
+#include "AboutQr.h"
 #include "AppConfig.h"
 #include "Theme.h"
 #include "Ui.h"
 
 constexpr Rect App::HOME_BUTTON;
+constexpr Rect App::ABOUT_LINK;
 
 namespace {
 constexpr Rect kGameCards[6] = {
@@ -20,6 +22,7 @@ constexpr const char* kSubtitles[6] = {
     "HUNT", "VAULT", "SPRINT", "1P / 2P", "1P / 2P", "3x3 / 4x4"};
 constexpr uint16_t kColors[6] = {
     Theme::CYAN, Theme::PURPLE, Theme::PINK, Theme::YELLOW, Theme::LIME, Theme::CYAN};
+constexpr uint32_t kHomeGlowIntervalMs = 750;
 }  // namespace
 
 App::App(TFT_eSPI& display)
@@ -154,14 +157,78 @@ void App::drawHome() {
   glowCard_ = 0;
   drawCardGlow(glowCard_, true);
   lastHomeFrame_ = millis();
-  tft_.setTextDatum(MC_DATUM);
+  tft_.setTextDatum(ML_DATUM);
   tft_.setTextFont(1);
   tft_.setTextColor(Theme::MUTED, Theme::BG);
-  tft_.drawString("6 GAMES  |  1-2 PLAYERS  |  OFFLINE", 160, 230);
+  tft_.drawString("6 GAMES  |  OFFLINE", 8, 230);
+  tft_.setTextDatum(MR_DATUM);
+  tft_.setTextColor(Theme::CYAN, Theme::BG);
+  tft_.drawString("lepczynski.it", 312, 230);
+  tft_.drawFastHLine(234, 236, 78, Theme::CYAN_DARK);
+}
+
+void App::drawAboutQr(int16_t x, int16_t y, uint8_t moduleSize) {
+  constexpr uint8_t quietZone = 4;
+  const int16_t modules = AboutQr::SIZE + quietZone * 2;
+  const int16_t size = modules * moduleSize;
+  tft_.fillRoundRect(x - 3, y - 3, size + 6, size + 6, 7, Theme::PANEL);
+  tft_.fillRect(x, y, size, size, Theme::WHITE);
+  for (uint8_t row = 0; row < AboutQr::SIZE; ++row) {
+    for (uint8_t col = 0; col < AboutQr::SIZE; ++col) {
+      if ((AboutQr::ROWS[row] & (1UL << col)) == 0) continue;
+      tft_.fillRect(x + (col + quietZone) * moduleSize,
+                    y + (row + quietZone) * moduleSize,
+                    moduleSize, moduleSize, Theme::BLACK);
+    }
+  }
+}
+
+void App::drawAbout() {
+  screen_ = Screen::About;
+  Ui::fillBackground(tft_);
+  Ui::drawSparkles(tft_, 10, 46, 180);
+  Ui::drawTopBar(tft_, "ABOUT THE BUILDER");
+
+  tft_.setTextDatum(ML_DATUM);
+  tft_.setTextFont(2);
+  tft_.setTextColor(Theme::CYAN, Theme::BG);
+  tft_.drawString("SMALL SCREENS.", 10, 55);
+  tft_.setTextFont(4);
+  tft_.setTextColor(Theme::TEXT, Theme::BG);
+  tft_.drawString("BIG IDEAS.", 10, 80);
+
+  tft_.setTextFont(2);
+  tft_.setTextColor(Theme::WHITE, Theme::BG);
+  tft_.drawString("Hi, I'm Wojtek.", 10, 108);
+  tft_.setTextFont(1);
+  tft_.setTextColor(Theme::MUTED, Theme::BG);
+  tft_.drawString("I turn tiny hardware", 10, 130);
+  tft_.drawString("into useful tools,", 10, 143);
+  tft_.drawString("unusual gadgets and", 10, 156);
+  tft_.drawString("pocket-sized games.", 10, 169);
+
+  drawAboutQr(214, 50, 3);
+  tft_.setTextDatum(MC_DATUM);
+  tft_.setTextFont(1);
+  tft_.setTextColor(Theme::CYAN, Theme::BG);
+  tft_.drawString("SCAN FOR MORE", 263, 160);
+
+  tft_.fillRect(0, 184, Config::SCREEN_WIDTH, 56, Theme::BG_2);
+  tft_.fillRect(0, 184, Config::SCREEN_WIDTH, 2, Theme::CYAN_DARK);
+  tft_.setTextDatum(MC_DATUM);
+  tft_.setTextFont(1);
+  tft_.setTextColor(Theme::CYAN, Theme::BG_2);
+  tft_.drawString("SCAN TO SEE WHAT I BUILD NEXT", 160, 197);
+  tft_.setTextColor(Theme::TEXT, Theme::BG_2);
+  tft_.drawString("GITHUB  |  YOUTUBE  |  BLOG  |  LINKEDIN", 160, 213);
+  tft_.setTextColor(Theme::MUTED, Theme::BG_2);
+  char version[28];
+  std::snprintf(version, sizeof(version), "POCKET ARCADE v%s", Config::APP_VERSION);
+  tft_.drawString(version, 160, 230);
 }
 
 void App::updateHomeAnimation(uint32_t now) {
-  if (static_cast<uint32_t>(now - lastHomeFrame_) < 480) return;
+  if (static_cast<uint32_t>(now - lastHomeFrame_) < kHomeGlowIntervalMs) return;
   lastHomeFrame_ = now;
   drawCardGlow(glowCard_, false);
   glowCard_ = (glowCard_ + 1) % 6;
@@ -177,6 +244,7 @@ void App::open(Screen screen) {
     case Screen::LineFour: lineFour_.enter(); break;
     case Screen::PairQuest: pairs_.enter(); break;
     case Screen::TileSlide: tiles_.enter(); break;
+    case Screen::About: drawAbout(); break;
     case Screen::Home: drawHome(); break;
   }
 }
@@ -189,6 +257,10 @@ void App::update(const InputFrame& input, uint32_t now) {
   if (screen_ == Screen::Home) {
     updateHomeAnimation(now);
     if (!input.pressed) return;
+    if (contains(ABOUT_LINK, input.x, input.y)) {
+      open(Screen::About);
+      return;
+    }
     for (uint8_t i = 0; i < 6; ++i) {
       if (contains(kGameCards[i], input.x, input.y)) {
         // Screen enum is ordered to match the six menu cards.
@@ -205,6 +277,7 @@ void App::update(const InputFrame& input, uint32_t now) {
     case Screen::LineFour: lineFour_.update(input, now); break;
     case Screen::PairQuest: pairs_.update(input, now); break;
     case Screen::TileSlide: tiles_.update(input, now); break;
+    case Screen::About: break;
     case Screen::Home: break;
   }
 }

@@ -47,7 +47,9 @@ class PairQuestGame {
   void drawBoard();
   void drawCard(uint8_t index, uint8_t widthOverride = CARD_W, bool faceOverride = false);
   void drawSymbol(uint8_t kind, int16_t cx, int16_t cy);
+  void drawSideFrame();
   void drawSide(uint32_t now);
+  void drawElapsed(uint32_t now);
   void beginFlip(uint8_t index, uint32_t now);
   void finishFlip(uint32_t now);
   int8_t at(uint16_t x, uint16_t y) const;

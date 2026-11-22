@@ -46,7 +46,9 @@ class TileSlideGame {
   void drawBoard();
   void drawCell(uint8_t index);
   void drawNumber(int16_t x, int16_t y, uint8_t value);
+  void drawSideFrame();
   void drawSide(uint32_t now);
+  void drawElapsed(uint32_t now);
   int8_t tileAt(uint16_t x, uint16_t y) const;
   void beginSlide(uint8_t index, uint32_t now);
   void animateSlide(uint32_t now);
