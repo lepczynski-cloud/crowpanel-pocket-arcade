@@ -8,7 +8,7 @@ All notable changes to this project are documented in this file.
 
 - Built-in **About the Builder** screen with the message **Small screens. Big ideas.**, a short introduction and a fixed QR code linking to `https://links.lepczynski.it/`.
 - Touch-enabled `lepczynski.it` label in the lower-right corner of the launcher.
-- Optimised current-device previews for the complete six-game lineup and the three games introduced in v1.3.
+- Added the latest real-device GIF for Line Four, Pair Quest and Tile Slide, plus direct cropped frames for the three new game cards.
 - Matching About section and QR link on the project website.
 
 ### Fixed
@@ -20,8 +20,9 @@ All notable changes to this project are documented in this file.
 
 - Slowed the rotating launcher highlight from 480 ms to 750 ms per card.
 - Replaced the launcher footer with `6 GAMES | OFFLINE` and the creator link.
-- Updated the firmware version, README, website metadata, release copy and social preview to v1.4.0.
-- Converted legacy gameplay GIFs to animated WebP, reducing media weight while preserving animation.
+- Updated the firmware version, README, website metadata and release copy to v1.4.0.
+- Simplified the website and README media: one latest gameplay GIF, one real frame for every game and no transformed legacy animations.
+- Applied lossless GIF optimisation only; dimensions, timing, frame order and rendered pixels remain unchanged.
 
 ## [1.3.0] - 2026-11-17
 
