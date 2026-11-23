@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#080c18">
+  <meta name="site-revision" content="2026-11-23-six-games-gallery">
   <meta name="description" content="CrowPanel Pocket Arcade: six original offline touchscreen games on a tiny ESP32 device. Explore real gameplay, watch the video and flash firmware from your browser.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="CrowPanel Pocket Arcade | Six games. One tiny screen.">
@@ -79,7 +80,6 @@
     .game-number { display:block; margin-bottom:7px; color:var(--mint); font:750 11px/1.4 ui-monospace,monospace; letter-spacing:.12em; }
     .game-info h3 { margin:0 0 7px; font-size:21px; font-weight:760; letter-spacing:-.028em; }
     .game-info p { margin:0; font-size:13px; line-height:1.65; color:var(--muted); }
-    .game-new { display:inline-block; margin:0 0 10px; padding:4px 8px; border-radius:6px; background:rgba(72,231,202,.11); color:var(--mint); font:750 10px/1.4 ui-monospace,monospace; letter-spacing:.075em; }
     .builder { padding:14px 0 76px; }
     .builder-card { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:48px; padding:39px 44px; border:1px solid var(--line); border-radius:24px; background:linear-gradient(140deg,rgba(21,31,54,.94),rgba(11,18,34,.95)); }
     .builder-card h2 { margin:0 0 14px; font-size:clamp(32px,4vw,51px); line-height:1.08; letter-spacing:-.05em; }
@@ -88,7 +88,6 @@
     .builder-qr { display:grid; justify-items:center; gap:10px; padding:14px; border-radius:17px; background:#f7fbff; color:#071321; text-decoration:none; }
     .builder-qr img { width:132px; height:132px; image-rendering:pixelated; }
     .builder-qr span { font:800 10px/1.2 ui-monospace,monospace; letter-spacing:.1em; }
-    .media-note { margin:20px 0 0; color:#8194af; font-size:12px; text-align:center; }
     .watch { padding:74px 0; }
     .watch-inner { display:grid; grid-template-columns:.78fr 1.22fr; align-items:center; gap:52px; }
     .watch-inner .section-head { margin-bottom:20px; }
@@ -133,8 +132,8 @@
     @keyframes heartbeat { 0%,100% {box-shadow:0 0 0 3px rgba(72,231,202,.09);} 50%{box-shadow:0 0 0 6px rgba(72,231,202,.045);} }
     @keyframes ambient { from {transform:scale(.94) translate(-7px,7px);} to {transform:scale(1.06) translate(10px,-4px);} }
     @media (max-width:950px) { .hero { gap:36px; } .hero-visual { width:min(100%,310px); } .watch-inner { gap:32px; } }
-    @media (max-width:720px) { .shell { width:min(100% - 34px,520px); } .nav { min-height:69px; } .navlinks { gap:15px; } .navlinks a:not(.source-link) { display:none; } .navlinks .source-link { padding:8px 12px; font-size:12px; } .hero { padding:58px 0 60px; grid-template-columns:1fr; min-height:0; gap:39px; } .hero h1 { font-size:clamp(47px,10vw,70px); } .hero-copy { font-size:15px; } .hero-visual { width:min(82%,320px); } .section,.watch { padding:57px 0; } .games { grid-template-columns:1fr; gap:15px; } .game-card { display:grid; grid-template-columns:42% 1fr; min-height:0; } .game-image { width:100%; min-height:0; } .game-info { padding:21px 17px; align-self:center; } .game-info h3 { font-size:19px; } .watch-inner { grid-template-columns:1fr; gap:20px; } .builder { padding:0 0 58px; } .builder-card { grid-template-columns:1fr; padding:28px 22px; gap:27px; } .builder-qr { justify-self:start; } .install-section { padding:55px 0 68px; } .install-shell { padding:26px 20px; } .steps { grid-template-columns:1fr; gap:17px; } .flash-grid { grid-template-columns:1fr; } .footer-row { align-items:flex-start; flex-direction:column; gap:10px; } }
-    @media (max-width:375px) { .brand { font-size:12px; } .brand-icon { width:32px; height:32px; } .game-image { width:34%; } .game-info { padding:13px; } .hero-visual { width:89%; } }
+    @media (max-width:720px) { .shell { width:min(100% - 34px,520px); } .nav { min-height:69px; } .navlinks { gap:15px; } .navlinks a:not(.source-link) { display:none; } .navlinks .source-link { padding:8px 12px; font-size:12px; } .hero { padding:58px 0 60px; grid-template-columns:1fr; min-height:0; gap:39px; } .hero h1 { font-size:clamp(47px,10vw,70px); } .hero-copy { font-size:15px; } .hero-visual { width:min(82%,320px); } .section,.watch { padding:57px 0; } .games { grid-template-columns:1fr; gap:15px; } .game-card { display:grid; grid-template-columns:minmax(0,42%) minmax(0,1fr); min-height:0; } .game-image { width:100%; min-height:0; } .game-info { padding:21px 17px; align-self:center; } .game-info h3 { font-size:19px; } .watch-inner { grid-template-columns:1fr; gap:20px; } .builder { padding:0 0 58px; } .builder-card { grid-template-columns:1fr; padding:28px 22px; gap:27px; } .builder-qr { justify-self:start; } .install-section { padding:55px 0 68px; } .install-shell { padding:26px 20px; } .steps { grid-template-columns:1fr; gap:17px; } .flash-grid { grid-template-columns:1fr; } .footer-row { align-items:flex-start; flex-direction:column; gap:10px; } }
+    @media (max-width:375px) { .brand { font-size:12px; } .brand-icon { width:32px; height:32px; } .game-card { grid-template-columns:minmax(0,40%) minmax(0,1fr); } .game-info { padding:15px 12px; } .game-info h3 { font-size:18px; } .hero-visual { width:89%; } }
     @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; animation:none !important; transition:none !important; } body.motion .reveal { opacity:1 !important; transform:none !important; } }
   </style>
   <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
@@ -167,51 +166,50 @@
       </div>
       <div class="hero-visual reveal">
         <div class="media-frame">
-          <span class="live-tag"><span class="dot"></span> LATEST GAMEPLAY</span>
-          <img src="assets/pocket-arcade-new-games.gif" alt="Line Four, Pair Quest and Tile Slide running on the real CrowPanel Pocket Arcade" width="540" height="960" fetchpriority="high">
+          <span class="live-tag"><span class="dot"></span> ALL SIX GAMES · REAL FOOTAGE</span>
+          <img src="assets/pocket-arcade-six-games.webp" alt="Animated real-device footage showing all six games: Burst Hunt, Shift Vault, Star Pod Sprint, Line Four, Pair Quest and Tile Slide" width="405" height="720" fetchpriority="high" loading="eager" decoding="async">
         </div>
-        <p class="real-caption">The three newest games, filmed on the real device.</p>
+        <p class="real-caption">All six games on real hardware. Full gameplay loop, approximately 25 seconds.</p>
       </div>
     </section>
 
     <section class="section shell" id="games" aria-labelledby="games-title">
       <div class="section-head reveal">
-        <p class="eyebrow">SIX GAMES · REAL DEVICE SHOTS</p>
-        <h2 id="games-title">See every game before you flash it.</h2>
-        <p>Each card uses a real frame from the physical CrowPanel. The first three come from the original recording; the last three are direct crops from the new GIF.</p>
+        <p class="eyebrow">THE FULL LINEUP · SIX ORIGINAL GAMES</p>
+        <h2 id="games-title">Pick your next obsession.</h2>
+        <p>Six offline games, one tiny touchscreen. Every card shows the game running on the actual CrowPanel, not a rendered mockup.</p>
       </div>
       <div class="games">
         <article class="game-card reveal">
           <div class="game-image"><img src="assets/burst.webp" width="540" height="550" loading="lazy" alt="Burst Hunt running on the real CrowPanel Pocket Arcade"></div>
-          <div class="game-info"><span class="game-number">01 / REACTION</span><h3>Burst Hunt</h3><p>Tap safe targets, avoid the red X and build a combo before time runs out. Three difficulty levels.</p></div>
+          <div class="game-info"><span class="game-number">01 / REACTION</span><h3>Burst Hunt</h3><p>Tap targets, dodge mines and chase a higher score. Three difficulty levels.</p></div>
         </article>
         <article class="game-card reveal">
           <div class="game-image"><img src="assets/shift.webp" width="540" height="550" loading="lazy" alt="Shift Vault running on the real CrowPanel Pocket Arcade"></div>
-          <div class="game-info"><span class="game-number">02 / LOGIC PUZZLE</span><h3>Shift Vault</h3><p>Swipe pieces across a generated 6×6 board and guide the golden key through the exit.</p></div>
+          <div class="game-info"><span class="game-number">02 / LOGIC PUZZLE</span><h3>Shift Vault</h3><p>Swipe puzzle pieces to guide the golden key out of a generated 6×6 board.</p></div>
         </article>
         <article class="game-card reveal">
           <div class="game-image"><img src="assets/sprint.webp" width="540" height="550" loading="lazy" alt="Star Pod Sprint running on the real CrowPanel Pocket Arcade"></div>
-          <div class="game-info"><span class="game-number">03 / ONE-TAP RUNNER</span><h3>Star Pod Sprint</h3><p>Tap to jump over geometric obstacles, collect coins and keep the pod moving. Three speed modes.</p></div>
+          <div class="game-info"><span class="game-number">03 / ONE-TAP RUNNER</span><h3>Star Pod Sprint</h3><p>Time your jumps, avoid obstacles and collect coins. Three speed modes.</p></div>
         </article>
         <article class="game-card reveal">
           <div class="game-image"><img src="assets/line-four.png" width="540" height="550" loading="lazy" alt="Line Four running on the real CrowPanel Pocket Arcade"></div>
-          <div class="game-info"><span class="game-new">NEW GAME</span><span class="game-number">04 / STRATEGY · SOLO OR 2P</span><h3>Line Four</h3><p>Drop cyan and pink discs into seven columns. Face the local CPU or share the device with a second player.</p></div>
+          <div class="game-info"><span class="game-number">04 / STRATEGY · SOLO OR 2P</span><h3>Line Four</h3><p>Connect four in a row. Challenge the local CPU or take turns with a friend.</p></div>
         </article>
         <article class="game-card reveal">
           <div class="game-image"><img src="assets/pair-quest.png" width="540" height="550" loading="lazy" alt="Pair Quest running on the real CrowPanel Pocket Arcade"></div>
-          <div class="game-info"><span class="game-new">NEW GAME</span><span class="game-number">05 / MEMORY · SOLO OR 2P</span><h3>Pair Quest</h3><p>Flip 16 cards and match eight procedural symbols. Race the clock solo or compete for pairs locally.</p></div>
+          <div class="game-info"><span class="game-number">05 / MEMORY · SOLO OR 2P</span><h3>Pair Quest</h3><p>Find eight matching pairs. Race the clock solo or compete on one device.</p></div>
         </article>
         <article class="game-card reveal">
           <div class="game-image"><img src="assets/tile-slide.png" width="540" height="550" loading="lazy" alt="Tile Slide running on the real CrowPanel Pocket Arcade"></div>
-          <div class="game-info"><span class="game-new">NEW GAME</span><span class="game-number">06 / NUMBER PUZZLE</span><h3>Tile Slide</h3><p>Move numbered tiles into the empty space and restore the sequence on a solvable 3×3 or 4×4 board.</p></div>
+          <div class="game-info"><span class="game-number">06 / NUMBER PUZZLE</span><h3>Tile Slide</h3><p>Slide numbered tiles into order on a solvable 3×3 or 4×4 board.</p></div>
         </article>
       </div>
-      <p class="media-note">Real footage only. No rendered device mockups and no generated gameplay screens.</p>
     </section>
 
     <section class="watch shell" id="watch" aria-labelledby="watch-title">
       <div class="watch-inner">
-        <div class="reveal"><div class="section-head"><p class="eyebrow">REAL GAMEPLAY</p><h2 id="watch-title">Small device.<br>Real fun.</h2><p>Watch the original three-game build in motion. The latest GIF above shows Line Four, Pair Quest and Tile Slide, while the gallery presents all six games on the real device.</p></div><a class="watch-link" href="https://www.youtube.com/watch?v=BkuglAy6qOQ" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a></div>
+        <div class="reveal"><div class="section-head"><p class="eyebrow">REAL GAMEPLAY</p><h2 id="watch-title">Small device.<br>Real fun.</h2><p>See where the project started. This video features the first three games; the animation above and the gallery show the current six-game version.</p></div><a class="watch-link" href="https://www.youtube.com/watch?v=BkuglAy6qOQ" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a></div>
         <div class="video-wrap reveal"><iframe title="CrowPanel Pocket Arcade gameplay on YouTube" loading="lazy" src="https://www.youtube-nocookie.com/embed/BkuglAy6qOQ?rel=0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
       </div>
     </section>

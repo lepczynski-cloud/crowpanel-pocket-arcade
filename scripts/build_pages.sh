@@ -3,6 +3,27 @@
 set -Eeuo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
+# The original full-length GIF belongs in media/ for GitHub README.
+# Remove the obsolete web/ copy left behind by older revisions.
+OLD_WEB_GIF="web/assets/pocket-arcade-new-games.gif"
+if [[ -f "$OLD_WEB_GIF" ]]; then
+  rm -f -- "$OLD_WEB_GIF"
+  echo "Removed obsolete website GIF: $OLD_WEB_GIF"
+fi
+
+# Fail early when a website asset exceeds the static asset size limit.
+python3 - <<'ASSET_CHECK'
+from pathlib import Path
+
+limit = 25 * 1024 * 1024
+oversized = [(p, p.stat().st_size) for p in Path('web').rglob('*')
+             if p.is_file() and p.stat().st_size > limit]
+if oversized:
+    for path, size in oversized:
+        print(f'Website asset too large: {path} ({size / (1024 * 1024):.1f} MiB, limit 25 MiB)')
+    raise SystemExit('Remove or replace oversized files in web/ before building.')
+ASSET_CHECK
+
 VENV="${TMPDIR:-/tmp}/pocket-arcade-build-venv"
 python3 -m venv "$VENV"
 "$VENV/bin/python" -m pip install --disable-pip-version-check --quiet 'platformio==6.1.18' 'esptool==4.8.1'

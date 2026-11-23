@@ -7,9 +7,9 @@
 [![Firmware](https://img.shields.io/badge/firmware-1.4.0-48e7ca.svg)](CHANGELOG.md) [![License: MIT](https://img.shields.io/badge/license-MIT-9f8aff.svg)](LICENSE)
 
 <p align="center">
-  <img src="web/assets/pocket-arcade-new-games.gif" alt="Line Four, Pair Quest and Tile Slide running on the real CrowPanel Pocket Arcade" width="320">
+  <img src="media/pocket-arcade-new-games.gif" alt="All six games running on the real CrowPanel Pocket Arcade" width="320">
 </p>
-<p align="center"><sub>The three newest games filmed on the real device. The gallery below shows all six.</sub></p>
+<p align="center"><sub>All six original games, filmed on real hardware. See individual screenshots below.</sub></p>
 
 CrowPanel Pocket Arcade runs on the **Elecrow CrowPanel 2.8-inch ESP32**. It needs no Wi-Fi, Bluetooth, account, SD card or background service during play. Connect the device, choose a game and use the touchscreen.
 
@@ -24,7 +24,7 @@ CrowPanel Pocket Arcade runs on the **Elecrow CrowPanel 2.8-inch ESP32**. It nee
 | <img src="web/assets/pair-quest.png" alt="Pair Quest running on the real device" width="220"> | **Pair Quest**<br>Flip 16 cards and match eight procedural symbols. Finish quickly in solo mode or compete for the most pairs in local two-player mode. |
 | <img src="web/assets/tile-slide.png" alt="Tile Slide running on the real device" width="220"> | **Tile Slide**<br>Move numbered tiles into the empty space and restore the sequence. Choose a solvable 3×3 or 4×4 board. |
 
-The first three images are unchanged project photos. The last three are simple crops taken directly from the uploaded GIF. No perspective correction, generated screen, overlay or colour adjustment was applied. The GIF itself was optimised losslessly without changing its dimensions, frame order, timing or rendered pixels.
+All six images are real gameplay footage. The first three are original project images; the other three are unaltered crops from footage of the newer games. No replacement screens or generated visuals are used.
 
 ## Launcher and v1.4 improvements
 
@@ -87,7 +87,8 @@ For manual touch calibration, set `RUN_TOUCH_CALIBRATION = true` in `include/App
 - `src/`, `include/`, `platformio.ini`: firmware and game code.
 - `include/AboutQr.h`: fixed QR matrix for `https://links.lepczynski.it/`.
 - `web/index.html`, `web/_headers`: responsive project website and hosting headers.
-- `web/assets/`: the original project photos, latest gameplay GIF, direct frame crops and QR image.
+- `web/assets/`: six real game screenshots, the smaller animated WebP used on the website and the About QR.
+- `media/pocket-arcade-new-games.gif`: the original full six-game GIF used at the top of this README.
 - `scripts/build_pages.sh`: firmware build and ESP Web Tools manifest generation.
 - `CHANGELOG.md`, `LICENSE`, `NOTICE`, `SECURITY.md`: release history and project policies.
 
