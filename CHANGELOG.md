@@ -8,7 +8,8 @@ All notable changes to this project are documented in this file.
 - Showcased all six games with real gameplay images in a single gallery and removed the redundant section for the three newest games.
 - Kept the original GIF in `media/` for the README and added an optimized animated WebP for the website.
 - Refined image captions and metadata.
-- No changes to ESP32 firmware, installer build script, wiring or controls.
+- No changes to ESP32 firmware, wiring or controls.
+- Added a final website-asset size check and an ignore rule for the obsolete oversized GIF copy.
 
 ## [1.4.0] - 2026-11-22
 

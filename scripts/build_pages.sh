@@ -11,8 +11,8 @@ if [[ -f "$OLD_WEB_GIF" ]]; then
   echo "Removed obsolete website GIF: $OLD_WEB_GIF"
 fi
 
-# Fail early when a website asset exceeds the static asset size limit.
-python3 - <<'ASSET_CHECK'
+check_web_asset_sizes() {
+  python3 - <<'ASSET_CHECK'
 from pathlib import Path
 
 limit = 25 * 1024 * 1024
@@ -23,6 +23,10 @@ if oversized:
         print(f'Website asset too large: {path} ({size / (1024 * 1024):.1f} MiB, limit 25 MiB)')
     raise SystemExit('Remove or replace oversized files in web/ before building.')
 ASSET_CHECK
+}
+
+# Fail early when a website asset exceeds the static asset size limit.
+check_web_asset_sizes
 
 VENV="${TMPDIR:-/tmp}/pocket-arcade-build-venv"
 python3 -m venv "$VENV"
@@ -120,3 +124,7 @@ for name, path, offset in (
 
 print('Website and installer files: web/')
 PY
+
+# Verify the final website output after firmware and manifests are published.
+rm -f -- "$OLD_WEB_GIF"
+check_web_asset_sizes
